@@ -1,0 +1,74 @@
+.avatar {
+    width: 141px;
+    image-rendering: pixelated;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box; // Ensure padding is included in height calculation
+
+    &.centered-avatar {
+      margin: 0 auto;
+    }
+
+    // resetting the additional padding
+    margin-bottom: -0.5rem !important;
+  }
+
+  .character-sprites {
+    width: 90px;
+    height: 90px;
+
+    display: inline-flex;
+  }
+
+  .character-sprites span {
+    position: absolute;
+  }
+
+  .current-pet {
+    bottom: 0px;
+    left: 0px;
+  }
+
+  .offset-kangaroo {
+    margin-top: 24px;
+  }
+
+  .invert {
+    filter: invert(100%);
+  }
+
+  .debug {
+    border: 1px solid red;
+
+    .character-sprites {
+      border: 1px solid blue;
+    }
+
+    .weapon {
+      border: 1px solid green;
+    }
+
+    span {
+      border: 1px solid yellow;
+    }
+  }
+
+/* Placeholder styles for game sprites - these would be replaced with actual sprite CSS */
+[class*="skin_"],
+[class*="hair_"],
+[class*="shirt_"],
+[class*="Mount_"],
+[class*="Pet-"] {
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+[class*="Mount_Head_"],
+[class*="Mount_Body_"] {
+  margin-top: 18px;
+}
+
+[class*="background_"] {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
