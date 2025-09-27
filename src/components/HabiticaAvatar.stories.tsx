@@ -104,11 +104,11 @@ export const AvatarOnly: Story = {
   },
 };
 
-export const WithBackground: Story = {
+export const WithoutBackground: Story = {
   args: {
     member: warriorMockMember,
     avatarOnly: true,
-    withBackground: true,
+    withBackground: false,
   },
 };
 
@@ -126,29 +126,29 @@ export const Centered: Story = {
   },
 };
 
-export const CustomSize: Story = {
-  args: {
-    member: warriorMockMember,
-    width: '200px',
-    height: '220px',
-  },
-};
+// export const CustomSize: Story = {
+//   args: {
+//     member: warriorMockMember,
+//     width: '200px',
+//     height: '220px',
+//   },
+// };
 
-export const WithCustomSpriteUrls: Story = {
-  args: {
-    member: warriorMockMember,
-  },
-  decorators: [
-    (Story) => {
-      // Example of how you might update sprite configuration
-      // In a real app, you'd do this once at startup
-      React.useEffect(() => {
-        // This is just for demonstration - in practice you'd call updateSpriteConfig
-        // with real Habitica sprite URLs
-        console.log('Sprite configuration can be updated for dynamic background images');
-      }, []);
+// export const WithCustomSpriteUrls: Story = {
+//   args: {
+//     member: warriorMockMember,
+//   },
+//   decorators: [
+//     (Story) => {
+//       // Example of how you might update sprite configuration
+//       // In a real app, you'd do this once at startup
+//       React.useEffect(() => {
+//         // This is just for demonstration - in practice you'd call updateSpriteConfig
+//         // with real Habitica sprite URLs
+//         console.log('Sprite configuration can be updated for dynamic background images');
+//       }, []);
       
-      return <Story />;
-    },
-  ],
-};
+//       return <Story />;
+//     },
+//   ],
+// };
