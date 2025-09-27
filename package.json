@@ -36,11 +36,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/habitica-avatar-react.git"
+    "url": "https://github.com/anitawlosek/habitica-avatar-react.git"
   },
-  "homepage": "https://github.com/yourusername/habitica-avatar-react#readme",
+  "homepage": "https://github.com/anitawlosek/habitica-avatar-react#readme",
   "bugs": {
-    "url": "https://github.com/yourusername/habitica-avatar-react/issues"
+    "url": "https://github.com/anitawlosek/habitica-avatar-react/issues"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
