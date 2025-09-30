@@ -88,3 +88,4 @@ storybook-static/
 
 # TypeScript cache
 *.tsbuildinfo
+*storybook.log
