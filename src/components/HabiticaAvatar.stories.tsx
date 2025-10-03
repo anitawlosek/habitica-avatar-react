@@ -1,26 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import HabiticaAvatar from './HabiticaAvatar';
 import userDataRaw from '../mocks/user.json';
+import withGifBackgroundRaw from '../mocks/withGifBackground.json';
 import type { HabiticaMember } from '../types/HabiticaMember';
 
 // Fix type mismatches for hair fields (convert numbers to strings)
-const userData: HabiticaMember = {
-  ...userDataRaw,
-  preferences: {
-    ...userDataRaw.preferences,
-    hair: {
-      ...userDataRaw.preferences.hair,
-      base: String(userDataRaw.preferences.hair.base),
-      bangs: String(userDataRaw.preferences.hair.bangs),
-      beard: String(userDataRaw.preferences.hair.beard),
-      mustache: String(userDataRaw.preferences.hair.mustache),
-      flower: String(userDataRaw.preferences.hair.flower),
-    },
-  },
-};
+const userData: HabiticaMember = userDataRaw as any;
+const withGifBackground: HabiticaMember = withGifBackgroundRaw as any;
 
 const meta: Meta<typeof HabiticaAvatar> = {
-  title: 'HabiticaAvatar/UserJson',
+  title: 'HabiticaAvatar',
   component: HabiticaAvatar,
   parameters: {
     layout: 'centered',
@@ -30,7 +19,7 @@ const meta: Meta<typeof HabiticaAvatar> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const FromUserJson: Story = {
+export const Default: Story = {
   args: {
     member: userData,
   },
@@ -46,6 +35,12 @@ export const WithVisualBuff: Story = {
         }
       }
     },
+  },
+};
+
+export const Sleeping: Story = {
+  args: {
+    member: {...userData, preferences: { ...userData.preferences, sleep: true }},
   },
 };
 
@@ -84,5 +79,11 @@ export const WithOnClick: Story = {
     onClick: (member) => {
       alert(`Avatar clicked! Class: ${member.stats.class}`);
     },
+  },
+};
+
+export const WithGifBackground: Story = {
+  args: {
+    member: withGifBackground,
   },
 };

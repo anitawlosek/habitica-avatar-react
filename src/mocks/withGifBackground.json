@@ -1,0 +1,54 @@
+{
+  "items": {
+    "gear": {
+      "equipped": {
+        "weapon": "weapon_special_summer2019Mage",
+        "armor": "armor_special_2",
+        "head": "head_special_2",
+        "shield": "shield_special_wintryMirror",
+        "back": "back_special_aetherCloak",
+        "headAccessory": "headAccessory_armoire_gogglesOfBookbinding",
+        "eyewear": "eyewear_special_aetherMask",
+        "body": "body_armoire_lifeguardWhistle"
+      },
+      "costume": {
+        "weapon": "weapon_armoire_funnyFoolBaton",
+        "armor": "armor_armoire_hattersSuit",
+        "head": "head_armoire_hattersTopHat",
+        "shield": "shield_armoire_chocolateFood",
+        "back": "back_base_0",
+        "headAccessory": "headAccessory_base_0",
+        "eyewear": "eyewear_base_0",
+        "body": "body_base_0"
+      }
+    },
+    "currentPet": "Dragon-Dessert",
+    "currentMount": ""
+  },
+  "preferences": {
+    "hair": {
+      "color": "brown",
+      "base": 8,
+      "bangs": 1,
+      "beard": 0,
+      "mustache": 0,
+      "flower": 0
+    },
+    "size": "broad",
+    "skin": "f5a76e",
+    "shirt": "black",
+    "chair": "none",
+    "costume": true,
+    "sleep": false,
+    "background": "airship"
+  },
+  "stats": {
+    "buffs": {
+      "snowball": false,
+      "spookySparkles": false,
+      "shinySeed": false,
+      "seafoam": false
+    },
+    "class": "wizard"
+  }
+}

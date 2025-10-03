@@ -1,16 +1,6 @@
 {
   "items": {
     "gear": {
-      "equipped": {
-        "weapon": "weapon_special_summer2019Mage",
-        "armor": "armor_special_2",
-        "head": "head_special_2",
-        "shield": "shield_special_wintryMirror",
-        "back": "back_special_aetherCloak",
-        "headAccessory": "headAccessory_armoire_gogglesOfBookbinding",
-        "eyewear": "eyewear_armoire_tragedyMask",
-        "body": "body_armoire_lifeguardWhistle"
-      },
       "costume": {
         "weapon": "weapon_armoire_shootingStarSpell",
         "armor": "armor_mystery_202509",
@@ -44,7 +34,6 @@
   },
   "stats": {
     "buffs": {
-      "streaks": false,
       "snowball": false,
       "spookySparkles": false,
       "shinySeed": false,

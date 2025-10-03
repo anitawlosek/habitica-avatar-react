@@ -240,7 +240,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
           </>
         )}
         {/* Resting */}
-        {member.preferences.sleep && <span className="zzz" />}
+        {member.preferences.sleep && <HabiticaSprite fileName='zzz' className="zzz" />}
         {!avatarOnly && (
           <>
             {member.items.currentMount && (
