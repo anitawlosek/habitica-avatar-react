@@ -1,0 +1,55 @@
+{
+  "items": {
+    "gear": {
+      "equipped": {
+        "weapon": "weapon_special_summer2019Mage",
+        "armor": "armor_special_2",
+        "head": "head_special_2",
+        "shield": "shield_special_wintryMirror",
+        "back": "back_special_aetherCloak",
+        "headAccessory": "headAccessory_armoire_gogglesOfBookbinding",
+        "eyewear": "eyewear_armoire_tragedyMask",
+        "body": "body_armoire_lifeguardWhistle"
+      },
+      "costume": {
+        "weapon": "weapon_armoire_shootingStarSpell",
+        "armor": "armor_mystery_202509",
+        "head": "head_armoire_redNewsieHat",
+        "shield": "shield_base_0",
+        "back": "back_base_0",
+        "headAccessory": "headAccessory_base_0",
+        "eyewear": "eyewear_special_blackTopFrame",
+        "body": "body_armoire_cozyScarf"
+      }
+    },
+    "currentPet": "Fox-Fungi",
+    "currentMount": ""
+  },
+  "preferences": {
+    "hair": {
+      "color": "brown",
+      "base": 5,
+      "bangs": 1,
+      "beard": 0,
+      "mustache": 0,
+      "flower": 10
+    },
+    "size": "broad",
+    "skin": "f5a76e",
+    "shirt": "black",
+    "chair": "none",
+    "costume": true,
+    "sleep": false,
+    "background": "covered_bridge_in_autumn"
+  },
+  "stats": {
+    "buffs": {
+      "streaks": false,
+      "snowball": false,
+      "spookySparkles": false,
+      "shinySeed": false,
+      "seafoam": false
+    },
+    "class": "wizard"
+  }
+}
