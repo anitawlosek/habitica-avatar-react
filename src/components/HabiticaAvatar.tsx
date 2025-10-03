@@ -10,8 +10,8 @@ import { createClassName } from '../lib/helpers';
 export interface HabiticaAvatarProps {
   debugMode?: boolean;
   member: HabiticaMember;
-  avatarOnly?: boolean;
   showClassBadge?: boolean;
+  avatarOnly?: boolean;
   withBackground?: boolean;
   overrideAvatarGear?: any;
   width?: string;

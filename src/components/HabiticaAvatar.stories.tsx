@@ -36,6 +36,26 @@ export const FromUserJson: Story = {
   },
 };
 
+export const WithVisualBuff: Story = {
+  args: {
+    member: {
+      ...userData, stats: {
+        ...userData.stats, buffs: {
+          ...userData.stats.buffs,
+          spookySparkles: true
+        }
+      }
+    },
+  },
+};
+
+export const WithClassBadge: Story = {
+  args: {
+    member: userData,
+    showClassBadge: true,
+  },
+};
+
 export const DebugMode: Story = {
   args: {
     member: userData,
@@ -58,9 +78,11 @@ export const AvatarOnlyWithBackground: Story = {
   },
 };
 
-export const WithClassBadge: Story = {
+export const WithOnClick: Story = {
   args: {
     member: userData,
-    showClassBadge: true,
+    onClick: (member) => {
+      alert(`Avatar clicked! Class: ${member.stats.class}`);
+    },
   },
 };
