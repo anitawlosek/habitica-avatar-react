@@ -2,11 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react';
 import HabiticaAvatar from './HabiticaAvatar';
 import userDataRaw from '../mocks/user.json';
 import withGifBackgroundRaw from '../mocks/withGifBackground.json';
+import emptyUserRaw from '../mocks/emptyUser.json';
 import type { HabiticaMember } from '../types/HabiticaMember';
 
 // Fix type mismatches for hair fields (convert numbers to strings)
 const userData: HabiticaMember = userDataRaw as any;
 const withGifBackground: HabiticaMember = withGifBackgroundRaw as any;
+const emptyUser: HabiticaMember = emptyUserRaw as any;
 
 const meta: Meta<typeof HabiticaAvatar> = {
   title: 'HabiticaAvatar',
@@ -22,6 +24,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     member: userData,
+  },
+};
+
+export const WithMount: Story = {
+  args: {
+    member: { ...userData, items: { ...userData.items, currentMount: 'Fox-AutumnLeaf' } },
   },
 };
 
@@ -85,5 +93,11 @@ export const WithOnClick: Story = {
 export const WithGifBackground: Story = {
   args: {
     member: withGifBackground,
+  },
+};
+
+export const EmptyUser: Story = {
+  args: {
+    member: emptyUser,
   },
 };

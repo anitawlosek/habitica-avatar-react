@@ -146,10 +146,10 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   }, [member, avatarOnly, withBackground, overrideAvatarGear]);
 
   const topLevelClassList = useMemo(() => {
-    const classes = [backgroundClass];
+    const classes = [];
     if (debugMode) classes.push('debug');
     if (centerAvatar) classes.push('centered-avatar');
-    return classes.join(' ');
+    return createClassName(...classes);
   }, [backgroundClass, debugMode, centerAvatar]);
 
   const visualBuffs = useMemo(() => {
@@ -196,19 +196,19 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   return (
     <HabiticaSprite
       className={createClassName("avatar", topLevelClassList)}
-      fileName={backgroundClass ?? ''}
+      fileName={backgroundClass}
       style={{ width, height, paddingTop }}
       onClick={handleClick}
       wrapper="div"
     >
       <div className="character-sprites" style={{ margin: spritesMargin }}>
         {!avatarOnly && member.items.currentMount && (
-          <HabiticaSprite fileName={`Mount_Body_${member.items.currentMount}`} className={`Mount_Body_${member.items.currentMount}`} />
+          <HabiticaSprite fileName={`Mount_Body_${member.items.currentMount}`} />
         )}
         {/* Buffs that cause visual changes to avatar: Snowman, Ghost, Flower, etc */}
         {Object.entries(visualBuffs).map(([item, klass]) =>
           member.stats.buffs[item] && showVisualBuffs ? (
-            <HabiticaSprite key={item} fileName={klass} className={klass} />
+            <HabiticaSprite key={item} fileName={klass} />
           ) : null
         )}
         {/* Show flower ALL THE TIME!! */}
@@ -216,37 +216,37 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
         {/* Show avatar only if not currently affected by visual buff */}
         {showAvatar() && (
           <>
-            <HabiticaSprite fileName={`chair_${member.preferences.chair}`} className={[`chair_${member.preferences.chair}`, specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={getGearClass('back')} className={[getGearClass('back'), specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={skinClass} className={[skinClass, specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={shirtClass} className={[shirtClass, specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={`head_0`} className={[`head_0`, specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={`${member.preferences.size}_${getGearClass('armor')}`} className={[`${member.preferences.size}_${getGearClass('armor')}`, specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={getGearClass('back_collar')} className={[getGearClass('back_collar'), specialMountClass].join(' ')} />
+            <HabiticaSprite fileName={`chair_${member.preferences.chair}`} className={specialMountClass} />
+            <HabiticaSprite fileName={getGearClass('back')} className={specialMountClass} />
+            <HabiticaSprite fileName={skinClass} className={specialMountClass} />
+            <HabiticaSprite fileName={shirtClass} className={specialMountClass} />
+            <HabiticaSprite fileName={`head_0`} className={specialMountClass} />
+            <HabiticaSprite fileName={`${member.preferences.size}_${getGearClass('armor')}`} className={specialMountClass} />
+            <HabiticaSprite fileName={getGearClass('back_collar')} className={specialMountClass} />
             {(['bangs', 'base', 'mustache', 'beard'] as Array<'bangs' | 'base' | 'mustache' | 'beard'>).map(type => (
-              <HabiticaSprite key={type} fileName={hairClass(type)} className={[hairClass(type), specialMountClass].join(' ')} />
+              <HabiticaSprite key={type} fileName={hairClass(type)} className={specialMountClass} />
             ))}
-            <HabiticaSprite fileName={getGearClass('body')} className={[getGearClass('body'), specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={getGearClass('eyewear')} className={[getGearClass('eyewear'), specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={getGearClass('head')} className={[getGearClass('head'), specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={getGearClass('headAccessory')} className={[getGearClass('headAccessory'), specialMountClass].join(' ')} />
-            <HabiticaSprite fileName={`hair_flower_${member.preferences.hair.flower}`} className={[`hair_flower_${member.preferences.hair.flower}`, specialMountClass].join(' ')} />
+            <HabiticaSprite fileName={getGearClass('body')} className={specialMountClass} />
+            <HabiticaSprite fileName={getGearClass('eyewear')} className={specialMountClass} />
+            <HabiticaSprite fileName={getGearClass('head')} className={specialMountClass} />
+            <HabiticaSprite fileName={getGearClass('headAccessory')} className={specialMountClass} />
+            <HabiticaSprite fileName={`hair_flower_${member.preferences.hair.flower}`} className={specialMountClass} />
             {!hideGear('shield') && (
-              <HabiticaSprite fileName={getGearClass('shield')} className={[getGearClass('shield'), specialMountClass].join(' ')} />
+              <HabiticaSprite fileName={getGearClass('shield')} className={specialMountClass} />
             )}
             {!hideGear('weapon') && (
-              <HabiticaSprite fileName={getGearClass('weapon')} className={[getGearClass('weapon'), specialMountClass, 'weapon'].join(' ')} />
+              <HabiticaSprite fileName={getGearClass('weapon')} className={createClassName(specialMountClass, 'weapon')} />
             )}
           </>
         )}
         {/* Resting */}
-        {member.preferences.sleep && <HabiticaSprite fileName='zzz' className="zzz" />}
+        {member.preferences.sleep && <HabiticaSprite fileName='zzz' />}
         {!avatarOnly && (
           <>
             {member.items.currentMount && (
-              <HabiticaSprite fileName={`Mount_Head_${member.items.currentMount}`} className={`Mount_Head_${member.items.currentMount}`} />
+              <HabiticaSprite fileName={`Mount_Head_${member.items.currentMount}`} />
             )}
-            <HabiticaSprite fileName={getPetClass()} className={['current-pet', getPetClass()].join(' ')} />
+            <HabiticaSprite fileName={getPetClass()} className='current-pet' />
           </>
         )}
       </div>

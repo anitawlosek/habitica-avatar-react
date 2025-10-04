@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect } from 'react';
 import { getSpriteUrl, loadSpriteDetails } from '../lib/sprites';
-import { isDefined } from '../lib/helpers';
+import { createClassName, isDefined } from '../lib/helpers';
 import './HabiticaAvatar.scss';
 
 export interface HabiticaSpriteProps {
@@ -28,12 +28,12 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
   onClick,
   children,
 }) => {
-  if (isDefined(fileName) && (fileName.includes('base_0') || fileName.includes('_0_') || fileName.includes('_none'))) {
-    return null;
-  }
-
   const Wrapper = wrapper;
   const [inlineStyles, setInlineStyles] = React.useState<CSSProperties | undefined>(undefined);
+
+  if (wrapper === 'span' && (!isDefined(fileName))) {
+    return null;
+  }
 
   useEffect(() => {
     const fetchSpriteDetails = async () => {
@@ -51,7 +51,7 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
   }, [fileName]);
 
   return (
-    <Wrapper className={className} onClick={onClick} style={inlineStyles ?? style}>
+    <Wrapper className={createClassName(fileName, className)} onClick={onClick} style={inlineStyles}>
       {isDefined(children) && children}
     </Wrapper>
   );
