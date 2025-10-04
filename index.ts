@@ -1,1 +1,1 @@
-export { default as HabiticaAvatar } from './src/components/HabiticaAvatar.tsx';
+export { default as HabiticaAvatar } from './src/components/HabiticaAvatar/HabiticaAvatar.tsx';

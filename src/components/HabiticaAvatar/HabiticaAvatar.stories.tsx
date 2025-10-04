@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import HabiticaAvatar from './HabiticaAvatar';
-import userDataRaw from '../mocks/user.json';
-import withGifBackgroundRaw from '../mocks/withGifBackground.json';
-import emptyUserRaw from '../mocks/emptyUser.json';
-import type { HabiticaMember } from '../types/HabiticaMember';
+import userDataRaw from '../../mocks/user.json';
+import withGifBackgroundRaw from '../../mocks/withGifBackground.json';
+import emptyUserRaw from '../../mocks/emptyUser.json';
+import type { HabiticaMember } from '../../types/HabiticaMember';
 
 // Fix type mismatches for hair fields (convert numbers to strings)
 const userData: HabiticaMember = userDataRaw as any;

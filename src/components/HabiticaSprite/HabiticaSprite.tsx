@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect } from 'react';
-import { getSpriteUrl, loadSpriteDetails } from '../lib/sprites';
-import { createClassName, isDefined } from '../lib/helpers';
-import './HabiticaAvatar.scss';
+import { getSpriteUrl, loadSpriteDetails } from '../../lib/sprites';
+import { createClassName, isDefined } from '../../lib/helpers';
+import '../HabiticaAvatar/HabiticaAvatar.scss';
 
 export interface HabiticaSpriteProps {
   /**

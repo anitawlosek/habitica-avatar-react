@@ -1,11 +1,11 @@
 import { useMemo, useCallback } from 'react';
-import HabiticaSprite from './HabiticaSprite';
+import HabiticaSprite from '../HabiticaSprite/HabiticaSprite';
 import moment from 'moment';
-import ClassBadge from './ClassBadge';
-import foolPet from '../mixins/foolPet';
-import { HabiticaMember } from '../types/HabiticaMember';
+import ClassBadge from '../ClassBadge/ClassBadge';
+import foolPet from '../../lib/foolPet';
+import { HabiticaMember } from '../../types/HabiticaMember';
 import './HabiticaAvatar.scss';
-import { createClassName } from '../lib/helpers';
+import { createClassName } from '../../lib/helpers';
 
 export interface HabiticaAvatarProps {
   debugMode?: boolean;
