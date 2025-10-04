@@ -1,0 +1,44 @@
+{
+  "items": {
+    "gear": {
+      "costume": {
+        "weapon": "weapon_armoire_shootingStarSpell",
+        "armor": "armor_mystery_202509",
+        "head": "head_armoire_redNewsieHat",
+        "shield": "shield_base_0",
+        "back": "back_base_0",
+        "headAccessory": "headAccessory_base_0",
+        "eyewear": "eyewear_special_blackTopFrame",
+        "body": "body_armoire_cozyScarf"
+      }
+    },
+    "currentPet": "Fox-Fungi",
+    "currentMount": ""
+  },
+  "preferences": {
+    "hair": {
+      "color": "brown",
+      "base": 5,
+      "bangs": 1,
+      "beard": 0,
+      "mustache": 0,
+      "flower": 10
+    },
+    "size": "broad",
+    "skin": "f5a76e",
+    "shirt": "black",
+    "chair": "none",
+    "costume": true,
+    "sleep": false,
+    "background": "covered_bridge_in_autumn"
+  },
+  "stats": {
+    "buffs": {
+      "snowball": false,
+      "spookySparkles": false,
+      "shinySeed": false,
+      "seafoam": false
+    },
+    "class": "wizard"
+  }
+}

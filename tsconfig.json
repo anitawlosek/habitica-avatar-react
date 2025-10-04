@@ -21,7 +21,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "allowImportingTsExtensions": true
   },
   "include": [
     "src"
