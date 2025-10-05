@@ -3,11 +3,11 @@ export interface HabiticaMember {
     skin: string;
     hair: {
       color: string;
-      base: string;
-      bangs: string;
-      mustache: string;
-      beard: string;
-      flower: string;
+      base: number;
+      bangs: number;
+      mustache: number;
+      beard: number;
+      flower: number;
     };
     shirt: string;
     size: string;

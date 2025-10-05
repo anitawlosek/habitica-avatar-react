@@ -1,6 +1,7 @@
 {
   "items": {
     "gear": {
+      "equipped": {},
       "costume": {
         "weapon": "weapon_armoire_shootingStarSpell",
         "armor": "armor_mystery_202509",
