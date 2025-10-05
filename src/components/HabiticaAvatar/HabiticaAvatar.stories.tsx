@@ -6,9 +6,9 @@ import emptyUserRaw from '../../mocks/emptyUser.json';
 import type { HabiticaMember } from '../../types/HabiticaMember';
 
 // Fix type mismatches for hair fields (convert numbers to strings)
-const userData: HabiticaMember = userDataRaw as any;
-const withGifBackground: HabiticaMember = withGifBackgroundRaw as any;
-const emptyUser: HabiticaMember = emptyUserRaw as any;
+const userData = userDataRaw as HabiticaMember;
+const withGifBackground = withGifBackgroundRaw as HabiticaMember;
+const emptyUser = emptyUserRaw as HabiticaMember;
 
 const meta: Meta<typeof HabiticaAvatar> = {
   title: 'HabiticaAvatar',

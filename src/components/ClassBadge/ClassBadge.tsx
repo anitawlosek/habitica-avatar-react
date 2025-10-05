@@ -41,7 +41,7 @@ const ClassBadge: React.FC<ClassBadgeProps> = ({ memberClass, badgeSize = 32, cl
       className={`class-badge d-flex justify-content-center${className ? ' ' + className : ''}`}
       style={{
         // CSS variable for badge size
-        ['--badge-size' as any]: badgeSize + 'px',
+        ...( { ['--badge-size']: badgeSize + 'px' } as React.CSSProperties ),
       }}
     >
       <div

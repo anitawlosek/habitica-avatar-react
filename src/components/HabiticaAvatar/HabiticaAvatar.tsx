@@ -1,11 +1,18 @@
 import { useMemo, useCallback } from 'react';
-import HabiticaSprite from '../HabiticaSprite/HabiticaSprite';
 import moment from 'moment';
+
+import HabiticaSprite from '../HabiticaSprite/HabiticaSprite';
 import ClassBadge from '../ClassBadge/ClassBadge';
+
 import foolPet from '../../lib/foolPet';
-import { HabiticaMember } from '../../types/HabiticaMember';
-import './HabiticaAvatar.scss';
 import { createClassName } from '../../lib/helpers';
+
+import { HabiticaMember } from '../../types/HabiticaMember';
+import { OverrideAvatarGear } from '../../types/OverrideAvatarGear';
+import { FlatGear } from '../../types/FlatGear';
+import { CurrentEvent, CurrentEventList } from '../../types/CurrentEventList';
+
+import './HabiticaAvatar.scss';
 
 export interface HabiticaAvatarProps {
   debugMode?: boolean;
@@ -13,7 +20,7 @@ export interface HabiticaAvatarProps {
   showClassBadge?: boolean;
   avatarOnly?: boolean;
   withBackground?: boolean;
-  overrideAvatarGear?: any;
+  overrideAvatarGear?: OverrideAvatarGear;
   width?: string;
   height?: string;
   centerAvatar?: boolean;
@@ -21,8 +28,8 @@ export interface HabiticaAvatarProps {
   overrideTopPadding?: string | null;
   showVisualBuffs?: boolean;
   showWeapon?: boolean;
-  flatGear?: any;
-  currentEventList?: any[];
+  flatGear?: FlatGear;
+  currentEventList?: CurrentEventList;
   onClick?: (member: HabiticaMember) => void;
 }
 
@@ -107,7 +114,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
 
   const getPetClass = useCallback(() => {
     const foolEvent = currentEventList?.find(
-      (event: any) => event.aprilFools && moment().isBetween(event.start, event.end)
+      (event: CurrentEvent) => event.aprilFools && moment().isBetween(event.start, event.end)
     );
     if (foolEvent) {
       return foolPet(member.items.currentPet, foolEvent.aprilFools);
