@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ClassBadge.scss';
+import './ClassBadge.css';
 
 const ICON_URLS: Record<string, string> = {
   warrior: 'https://raw.githubusercontent.com/HabitRPG/habitica/e096d7ac42bb6bf5def2f8fdf71cd0afea10d755/website/client/src/assets/svg/warrior.svg',

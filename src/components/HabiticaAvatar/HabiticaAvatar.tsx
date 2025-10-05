@@ -12,7 +12,7 @@ import { OverrideAvatarGear } from '../../types/OverrideAvatarGear';
 import { FlatGear } from '../../types/FlatGear';
 import { CurrentEvent, CurrentEventList } from '../../types/CurrentEventList';
 
-import './HabiticaAvatar.scss';
+import './HabiticaAvatar.css';
 
 export interface HabiticaAvatarProps {
   debugMode?: boolean;
