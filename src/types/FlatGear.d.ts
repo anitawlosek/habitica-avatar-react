@@ -1,6 +1,6 @@
 export interface FlatGearItem {
   twoHanded?: boolean;
-  [key: string]: boolean | undefined;
+  [key: string]: string | number | boolean | undefined;
 }
 
 export interface FlatGear {
