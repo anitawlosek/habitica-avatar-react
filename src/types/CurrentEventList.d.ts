@@ -2,7 +2,7 @@ export interface CurrentEvent {
   aprilFools: string;
   start: string;
   end: string;
-  [key: string]: any;
+  [key: string]: string;
 }
 
 export type CurrentEventList = CurrentEvent[];
