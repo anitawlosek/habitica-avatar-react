@@ -83,17 +83,7 @@ This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**
 
 Copyright (c) 2025 Anita Włosek
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
 See the [LICENSE](LICENSE) file for the full license text.
-
-### Habitica Assets
-
-This library renders avatar images served from **Habitica's servers** (`https://habitica-assets.s3.amazonaws.com/`). These images are **not redistributed** with this code; they are loaded directly from Habitica's hosting.
-
-The Habitica avatar images and game assets are the property of HabitRPG, Inc. and are licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License (CC BY-NC-SA 3.0)**.
-
-You must comply with the CC BY-NC-SA 3.0 license terms when using Habitica assets. Learn more at https://creativecommons.org/licenses/by-nc-sa/3.0/
 
 ### Disclaimer
 
