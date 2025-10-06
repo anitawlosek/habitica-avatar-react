@@ -31,10 +31,6 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
   const Wrapper = wrapper;
   const [inlineStyles, setInlineStyles] = React.useState<CSSProperties | undefined>(undefined);
 
-  if (wrapper === 'span' && (!isDefined(fileName))) {
-    return null;
-  }
-
   useEffect(() => {
     const fetchSpriteDetails = async () => {
       const details = await loadSpriteDetails(fileName);
@@ -49,6 +45,10 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
 
     fetchSpriteDetails();
   }, [fileName]);
+
+  if (wrapper === 'span' && (!isDefined(fileName))) {
+    return null;
+  }
 
   return (
     <Wrapper className={createClassName(fileName, className)} onClick={onClick} style={inlineStyles}>
