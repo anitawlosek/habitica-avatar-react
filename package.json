@@ -30,7 +30,7 @@
     "game"
   ],
   "author": "Anita Włosek <anitawlosek@gmail.com>",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/anitawlosek/habitica-avatar-react.git"
