@@ -77,4 +77,14 @@ Example user objects can be found in [`src/mocks/`](src/mocks/).
 
 ## License
 
-MIT © Anita Włosek
+### Code License
+
+This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
+
+Copyright (c) 2025 Anita Włosek
+
+See the [LICENSE](LICENSE) file for the full license text.
+
+### Disclaimer
+
+This project is **not affiliated with, endorsed by, or sponsored by HabitRPG, Inc. or Habitica**. Habitica is a trademark of HabitRPG, Inc.
