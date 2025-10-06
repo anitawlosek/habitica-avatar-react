@@ -104,9 +104,6 @@ var HabiticaSprite = ({
 }) => {
   const Wrapper = wrapper;
   const [inlineStyles, setInlineStyles] = import_react.default.useState(void 0);
-  if (wrapper === "span" && !isDefined(fileName)) {
-    return null;
-  }
   (0, import_react.useEffect)(() => {
     const fetchSpriteDetails = async () => {
       const details = await loadSpriteDetails(fileName);
@@ -119,6 +116,9 @@ var HabiticaSprite = ({
     };
     fetchSpriteDetails();
   }, [fileName]);
+  if (wrapper === "span" && !isDefined(fileName)) {
+    return null;
+  }
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Wrapper, { className: createClassName(fileName, className), onClick, style: inlineStyles, children: isDefined(children) && children });
 };
 var HabiticaSprite_default = HabiticaSprite;
