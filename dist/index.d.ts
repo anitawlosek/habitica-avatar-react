@@ -63,7 +63,7 @@ interface OverrideAvatarGear {
 
 interface FlatGearItem {
   twoHanded?: boolean;
-  [key: string]: any;
+  [key: string]: string | number | boolean | undefined;
 }
 
 interface FlatGear {
@@ -74,7 +74,7 @@ interface CurrentEvent {
   aprilFools: string;
   start: string;
   end: string;
-  [key: string]: any;
+  [key: string]: string;
 }
 
 type CurrentEventList = CurrentEvent[];

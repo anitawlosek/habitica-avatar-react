@@ -83,7 +83,6 @@ var isDefined = (value) => {
 };
 var createClassName = (...classes) => {
   const definedClasses = classes.filter((className) => isDefined(className) && className !== false && className !== "");
-  console.log("Defined classes:", definedClasses);
   if (definedClasses.length === 0) {
     return "";
   }
