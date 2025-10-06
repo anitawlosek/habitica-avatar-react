@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import HabiticaAvatar from './HabiticaAvatar';
+import HabiticaAvatar, { HabiticaAvatarProps } from './HabiticaAvatar';
 import userDataRaw from '../../mocks/user.json';
 import withGifBackgroundRaw from '../../mocks/withGifBackground.json';
 import emptyUserRaw from '../../mocks/emptyUser.json';
@@ -10,7 +10,7 @@ const userData = userDataRaw as HabiticaMember;
 const withGifBackground = withGifBackgroundRaw as HabiticaMember;
 const emptyUser = emptyUserRaw as HabiticaMember;
 
-const meta: Meta<typeof HabiticaAvatar> = {
+const meta: Meta<HabiticaAvatarProps> = {
   title: 'HabiticaAvatar',
   component: HabiticaAvatar,
   parameters: {
