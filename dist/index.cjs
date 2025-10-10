@@ -49,7 +49,7 @@ var getSpriteUrl = (fileName, ext = DEFAULT_EXTENSION, baseUrl = BASE_URL) => {
 };
 var imageDetailsCache = /* @__PURE__ */ new Map();
 var loadSpriteDetails = async (fileName) => {
-  if (!fileName) {
+  if (!fileName || fileName.includes("_base_0") || fileName.includes("none") || fileName.includes("_0_")) {
     return null;
   }
   if (imageDetailsCache.has(fileName)) {
@@ -115,7 +115,7 @@ var HabiticaSprite = ({
       });
     };
     fetchSpriteDetails();
-  }, [fileName]);
+  }, [fileName, style]);
   if (wrapper === "span" && !isDefined(fileName)) {
     return null;
   }
@@ -245,8 +245,8 @@ var HabiticaAvatar = ({
   onClick
 }) => {
   const costumeClass = (0, import_react3.useMemo)(
-    () => member?.preferences?.costume ? "costume" : "equipped",
-    [member?.preferences?.costume]
+    () => member.preferences?.costume ? "costume" : "equipped",
+    [member.preferences?.costume]
   );
   const getGearClass = (0, import_react3.useCallback)(
     (gearType) => {
@@ -305,7 +305,7 @@ var HabiticaAvatar = ({
     if (foolEvent) {
       return foolPet(member.items.currentPet, foolEvent.aprilFools);
     }
-    if (member?.items.currentPet) return `Pet-${member.items.currentPet}`;
+    if (member.items.currentPet) return `Pet-${member.items.currentPet}`;
     return "";
   }, [member, currentEventList]);
   const hasClass = (0, import_react3.useMemo)(() => {
@@ -316,11 +316,11 @@ var HabiticaAvatar = ({
     if (overrideTopPadding) return overrideTopPadding;
     let val = "24px";
     if (!avatarOnly) {
-      if (member?.items.currentPet) val = "24px";
-      if (member?.items.currentMount) val = "0px";
+      if (member.items.currentPet) val = "24px";
+      if (member.items.currentMount) val = "0px";
     }
     return val;
-  }, [overrideTopPadding, avatarOnly, member]);
+  }, [overrideTopPadding, avatarOnly, member.items.currentMount, member.items.currentPet]);
   const backgroundClass = (0, import_react3.useMemo)(() => {
     if (member) {
       const { background } = member.preferences;
@@ -365,7 +365,7 @@ var HabiticaAvatar = ({
     return `${member.preferences.size}_shirt_${member.preferences.shirt}`;
   }, [member, overrideAvatarGear]);
   const specialMountClass = (0, import_react3.useMemo)(() => {
-    if (!avatarOnly && member?.items.currentMount && member?.items.currentMount.includes("Kangaroo")) {
+    if (!avatarOnly && member.items.currentMount && member.items.currentMount.includes("Kangaroo")) {
       return "offset-kangaroo";
     }
     return "";
