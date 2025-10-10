@@ -52,8 +52,8 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   onClick,
 }) => {
   const costumeClass = useMemo(
-    () => (member?.preferences?.costume ? 'costume' : 'equipped'),
-    [member?.preferences?.costume]
+    () => (member.preferences?.costume ? 'costume' : 'equipped'),
+    [member.preferences?.costume]
   );
 
   const getGearClass = useCallback(
@@ -119,7 +119,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
     if (foolEvent) {
       return foolPet(member.items.currentPet, foolEvent.aprilFools);
     }
-    if (member?.items.currentPet) return `Pet-${member.items.currentPet}`;
+    if (member.items.currentPet) return `Pet-${member.items.currentPet}`;
     return '';
   }, [member, currentEventList]);
 
@@ -130,13 +130,16 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
 
   const paddingTop = useMemo(() => {
     if (overrideTopPadding) return overrideTopPadding;
+
     let val = '24px';
+
     if (!avatarOnly) {
-      if (member?.items.currentPet) val = '24px';
-      if (member?.items.currentMount) val = '0px';
+      if (member.items.currentPet) val = '24px';
+      if (member.items.currentMount) val = '0px';
     }
+
     return val;
-  }, [overrideTopPadding, avatarOnly, member]);
+  }, [overrideTopPadding, avatarOnly, member.items.currentMount, member.items.currentPet]);
 
   const backgroundClass = useMemo(() => {
     if (member) {
@@ -187,7 +190,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   }, [member, overrideAvatarGear]);
 
   const specialMountClass = useMemo(() => {
-    if (!avatarOnly && member?.items.currentMount && member?.items.currentMount.includes('Kangaroo')) {
+    if (!avatarOnly && member.items.currentMount && member.items.currentMount.includes('Kangaroo')) {
       return 'offset-kangaroo';
     }
     return '';

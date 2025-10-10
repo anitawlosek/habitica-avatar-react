@@ -44,7 +44,7 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
     };
 
     fetchSpriteDetails();
-  }, [fileName]);
+  }, [fileName, style]);
 
   if (wrapper === 'span' && (!isDefined(fileName))) {
     return null;
