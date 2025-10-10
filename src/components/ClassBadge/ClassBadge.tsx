@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { ClassType } from '../../types/HabiticaMember';
 import './ClassBadge.css';
 
-const ICON_URLS: Record<string, string> = {
+const ICON_URLS: Record<ClassType, string> = {
   warrior: 'https://raw.githubusercontent.com/HabitRPG/habitica/e096d7ac42bb6bf5def2f8fdf71cd0afea10d755/website/client/src/assets/svg/warrior.svg',
   rogue: 'https://raw.githubusercontent.com/HabitRPG/habitica/e096d7ac42bb6bf5def2f8fdf71cd0afea10d755/website/client/src/assets/svg/rogue.svg',
   healer: 'https://raw.githubusercontent.com/HabitRPG/habitica/e096d7ac42bb6bf5def2f8fdf71cd0afea10d755/website/client/src/assets/svg/healer.svg',
@@ -9,7 +10,7 @@ const ICON_URLS: Record<string, string> = {
 };
 
 export interface ClassBadgeProps {
-  memberClass: 'warrior' | 'rogue' | 'healer' | 'wizard' | string;
+  memberClass: ClassType;
   badgeSize?: number;
   className?: string;
 }
