@@ -28,7 +28,7 @@ const imageDetailsCache = new Map<string, SpriteDetails>();
  * Automatically detects PNG or GIF format
  */
 export const loadSpriteDetails = async (fileName: string): Promise<SpriteDetails | null> => {
-  if (!fileName) {
+  if (!fileName || fileName.includes('_base_0') || fileName.includes('none') || fileName.includes('_0_')) {
     return null;
   }
   
