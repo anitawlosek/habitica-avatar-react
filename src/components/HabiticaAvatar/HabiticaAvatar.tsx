@@ -201,6 +201,22 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
     if (onClick) onClick(member);
   };
 
+  const spriteScale = useMemo(() => {
+    // Default dimensions
+    const defaultWidth = 141;
+    const defaultHeight = 147;
+    
+    // Parse width and height, removing 'px' suffix if present
+    const numericWidth = parseFloat(width);
+    const numericHeight = parseFloat(height);
+    
+    // Calculate scale factors
+    const scaleX = numericWidth / defaultWidth;
+    const scaleY = numericHeight / defaultHeight;
+    
+    return { scaleX, scaleY };
+  }, [width, height]);
+
   if (!member.preferences) return null;
 
   return (
@@ -211,7 +227,14 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
       onClick={handleClick}
       wrapper="div"
     >
-      <div className="character-sprites" style={{ margin: spritesMargin }}>
+      <div 
+        className="character-sprites" 
+        style={{ 
+          margin: spritesMargin,
+          transform: `scale(${spriteScale.scaleX}, ${spriteScale.scaleY})`,
+          transformOrigin: 'top left'
+        }}
+      >
         {!avatarOnly && member.items.currentMount && (
           <HabiticaSprite fileName={`Mount_Body_${member.items.currentMount}`} />
         )}
