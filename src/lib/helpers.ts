@@ -15,3 +15,7 @@ export const createClassName = (...classes: (string | undefined | false)[]): str
 
   return definedClasses.join(' ');
 };
+
+export const getNestedProperty = <T>(obj: any, path: string): T | undefined => {
+  return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+};

@@ -1,3 +1,6 @@
+import moment from "moment";
+import { CurrentEvent, CurrentEventList } from "../types/CurrentEventList";
+
 // foolPet: Returns a special pet class name for April Fools events, otherwise returns the normal pet class.
 const SPECIAL_PETS = [
   'Bear-Veteran',
@@ -57,3 +60,15 @@ export default function foolPet(pet: string | null | undefined, prank: string): 
   }
   return `Pet-BearCub-${prank}`;
 }
+
+export const getAprilFoolsPrank = (currentEventList: CurrentEventList) => {
+  const foolEvent = currentEventList?.find(
+    (event: CurrentEvent) => event.aprilFools && moment().isBetween(event.start, event.end)
+  );
+
+  if (foolEvent) {
+    return foolEvent.aprilFools;
+  }
+
+  return null;
+};
