@@ -72,6 +72,7 @@
   },
   "dependencies": {
     "@types/react-dom": "^19.2.0",
+    "habitica-avatar-manifest": "github:anitawlosek/habitica-avatar-manifest#v1.0.1-beta",
     "moment": "^2.30.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
