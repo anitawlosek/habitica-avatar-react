@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 
 import HabiticaSprite from '../HabiticaSprite/HabiticaSprite';
 import ClassBadge from '../ClassBadge/ClassBadge';
@@ -12,7 +12,7 @@ import { FlatGear } from '../../types/FlatGear';
 import { CurrentEventList } from '../../types/CurrentEventList';
 
 import './HabiticaAvatar.css';
-import { getHabiticaAvatarItemsDetail, getHabiticaImagesMeta, ImagesMeta } from 'habitica-avatar-manifest';
+import { AvatarItemsDetails, getHabiticaAvatarItemsDetail, getHabiticaImagesMeta, ImagesMeta } from 'habitica-avatar-manifest';
 import { AvatarSprites, getAvatarSprites } from '../../lib/sprites';
 
 export interface HabiticaAvatarProps {
@@ -32,6 +32,8 @@ export interface HabiticaAvatarProps {
   flatGear?: FlatGear;
   currentEventList?: CurrentEventList;
   onClick?: (member: HabiticaMember) => void;
+  imagesMeta?: ImagesMeta;
+  avatarItemsDetails?: AvatarItemsDetails;
 }
 
 const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
@@ -51,14 +53,15 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   flatGear = {},
   currentEventList = [],
   onClick,
+  ...props
 }) => {
   const [avatarSpritesDetails, setAvatarSpritesDetails] = useState<AvatarSprites | null>(null);
 
   useEffect(() => {
     // Preload all necessary sprite details
     const loadSpriteDetails = async () => {
-      const imagesMeta = await getHabiticaImagesMeta();
-      const avatarItemsDetails = await getHabiticaAvatarItemsDetail();
+      const imagesMeta = props.imagesMeta || await getHabiticaImagesMeta();
+      const avatarItemsDetails = props.avatarItemsDetails || await getHabiticaAvatarItemsDetail();
       const petPrank = getAprilFoolsPrank(currentEventList);
       const avatarSprites = getAvatarSprites(member, overrideAvatarGear, avatarItemsDetails, imagesMeta, petPrank);
 
