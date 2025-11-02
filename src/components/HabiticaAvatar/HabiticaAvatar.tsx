@@ -14,6 +14,7 @@ import { CurrentEventList } from '../../types/CurrentEventList';
 import './HabiticaAvatar.css';
 import { AvatarItemsDetails, getHabiticaAvatarItemsDetail, getHabiticaImagesMeta, ImagesMeta } from 'habitica-avatar-manifest';
 import { AvatarSprites, getAvatarSprites } from '../../lib/sprites';
+import { enrichAvatarSpritesWithBase64 } from '../../lib/base64Images';
 
 export interface HabiticaAvatarProps {
   debugMode?: boolean;
@@ -34,6 +35,7 @@ export interface HabiticaAvatarProps {
   onClick?: (member: HabiticaMember) => void;
   imagesMeta?: ImagesMeta;
   avatarItemsDetails?: AvatarItemsDetails;
+  base64Url?: string;
 }
 
 const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
@@ -53,6 +55,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   flatGear = {},
   currentEventList = [],
   onClick,
+  base64Url,
   ...props
 }) => {
   const [avatarSpritesDetails, setAvatarSpritesDetails] = useState<AvatarSprites | null>(null);
@@ -65,8 +68,12 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
       const petPrank = getAprilFoolsPrank(currentEventList);
       const avatarSprites = getAvatarSprites(member, overrideAvatarGear, avatarItemsDetails, imagesMeta, petPrank);
 
-      console.log(avatarSprites);
-      setAvatarSpritesDetails(avatarSprites);
+      if (isDefined(base64Url)) {
+        const enrichedSprites = await enrichAvatarSpritesWithBase64(avatarSprites, base64Url);
+        setAvatarSpritesDetails(enrichedSprites);
+      } else {
+        setAvatarSpritesDetails(avatarSprites);
+      }
     };
     loadSpriteDetails();
   }, [member]);
