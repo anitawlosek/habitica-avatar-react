@@ -67,15 +67,18 @@ jobs:
       run: |
         BRANCH_NAME="v${{ steps.package-version.outputs.version }}"
         
-        # Create orphan branch (clean history, only dist files)
-        git checkout --orphan $BRANCH_NAME
+        # Create new branch from main
+        git checkout -b $BRANCH_NAME
         
-        # Remove all files except dist and essential files
-        git rm -rf .
+        # Remove all source files and dev files, keep only essentials + dist
+        rm -rf src/ .github/ .storybook/ node_modules/ issues/ ISSUE_TEMPLATE/
+        rm -f *.config.* tsconfig.json vitest.* eslint.* index.ts
         
-        # Add back the dist directory and essential files from main
-        git checkout main -- package.json README.md LICENSE .npmignore
+        # Force add dist directory (ignore .gitignore for this)
         git add dist/ -f
+        
+        # Add other essential files
+        git add package.json README.md LICENSE .npmignore
         
         # Commit the built files
         git commit -m "Release v${{ steps.package-version.outputs.version }}
