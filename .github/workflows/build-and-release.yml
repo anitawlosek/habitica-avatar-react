@@ -74,7 +74,7 @@ jobs:
         git rm -rf .
         
         # Add back the dist directory and essential files from main
-        git checkout main -- package.json README.md LICENSE
+        git checkout main -- package.json README.md LICENSE .npmignore
         git add dist/ -f
         
         # Commit the built files
@@ -94,10 +94,10 @@ jobs:
         
         if [ "${{ steps.check-branch.outputs.branch-exists }}" = "true" ]; then
           echo "🔄 Updating existing branch $BRANCH_NAME"
-          git push origin $BRANCH_NAME --force
+          git push origin HEAD:refs/heads/$BRANCH_NAME --force
         else
           echo "🚀 Creating new branch $BRANCH_NAME"
-          git push origin $BRANCH_NAME
+          git push origin HEAD:refs/heads/$BRANCH_NAME
         fi
         
         echo "✅ Successfully pushed to branch: $BRANCH_NAME"
