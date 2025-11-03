@@ -14,13 +14,13 @@ A React component library for rendering Habitica game avatars with customizable 
 This package is **not published on npm**. Install it directly from GitHub:
 
 ```bash
-npm install anitawlosek/habitica-avatar-react#release
+npm install anitawlosek/habitica-avatar-react#v0.0.3-alpha
 ```
 
 or with yarn:
 
 ```bash
-yarn add anitawlosek/habitica-avatar-react#release
+yarn add anitawlosek/habitica-avatar-react#v0.0.3-alpha
 ```
 
 ## Usage
