@@ -29,16 +29,13 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
   children,
 }) => {
   const Wrapper = wrapper;
-  const [inlineStyles, setInlineStyles] = React.useState<CSSProperties | undefined>(undefined);
 
-  useEffect(() => {
-      setInlineStyles({
-        width: spriteDetails ? `${spriteDetails.width}px` : undefined,
-        height: spriteDetails ? `${spriteDetails.height}px` : undefined,
-        backgroundImage: spriteDetails ? `url(${spriteDetails.backgroundUrl})` : undefined,
-        ...style
-      });
-  }, [spriteDetails, style]);
+  const inlineStyles = React.useMemo<CSSProperties | undefined>(() => ({
+    width: spriteDetails ? `${spriteDetails.width}px` : undefined,
+    height: spriteDetails ? `${spriteDetails.height}px` : undefined,
+    backgroundImage: spriteDetails ? `url(${spriteDetails.backgroundUrl})` : undefined,
+    ...style
+  }), [spriteDetails, style]);
 
   if (wrapper === 'span' && (!isDefined(spriteDetails))) {
     return null;
