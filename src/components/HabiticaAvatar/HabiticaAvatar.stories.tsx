@@ -1,3 +1,4 @@
+import React, { useCallback, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import HabiticaAvatar from './HabiticaAvatar';
 import userDataRaw from '../../mocks/user.json';
@@ -143,6 +144,20 @@ const meta: Meta<typeof HabiticaAvatar> = {
         type: { summary: '(member: HabiticaMember) => void' },
       },
     },
+    onLoadingStart: {
+      action: 'avatar-start-loading',
+      description: 'Called when avatar starts loading.',
+      table: {
+        type: { summary: '() => void' },
+      },
+    },
+    onLoadingEnd: {
+      action: 'avatar-end-loading',
+      description: 'Called when all avatar images finish loading.',
+      table: {
+        type: { summary: '() => void' },
+      },
+    },
   },
 };
 
@@ -227,5 +242,90 @@ export const WithGifBackground: Story = {
 export const EmptyUser: Story = {
   args: {
     member: emptyUser,
+  },
+};
+
+// Component to demonstrate loading callbacks
+const AvatarWithLoadingState = (args: any) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadStartTime, setLoadStartTime] = useState<number | null>(null);
+  const [loadDuration, setLoadDuration] = useState<number | null>(null);
+
+  const handleStartLoading = useCallback(() => {
+    setIsLoading(true);
+    setLoadStartTime(Date.now());
+    setLoadDuration(null);
+    console.log('🚀 Avatar started loading');
+  }, []);
+
+  const handleEndLoading = useCallback(() => {
+    setIsLoading(false);
+    const duration = loadStartTime ? Date.now() - loadStartTime : 0;
+    setLoadDuration(duration);
+    console.log(`✅ Avatar finished loading in ${duration}ms`);
+  }, [loadStartTime]);
+
+  return (
+    <div>
+      <div style={{ marginBottom: '16px', minHeight: '60px', textAlign: 'center' }}>
+        <div style={{ 
+          fontSize: '18px', 
+          fontWeight: 'bold',
+          color: isLoading ? '#ff6b35' : '#28a745',
+          marginBottom: '8px'
+        }}>
+          {isLoading ? '⏳ Loading Avatar...' : '✅ Avatar Ready!'}
+        </div>
+        
+        {loadDuration !== null && (
+          <div style={{ fontSize: '14px', color: '#666' }}>
+            Last load took: {loadDuration}ms
+          </div>
+        )}
+        
+        <div style={{ 
+          fontSize: '12px', 
+          color: '#999',
+          marginTop: '4px'
+        }}>
+          Check the console and Actions panel for callback logs
+        </div>
+      </div>
+      
+      <HabiticaAvatar
+        {...args}
+        centerAvatar
+        onLoadingStart={handleStartLoading}
+        onLoadingEnd={handleEndLoading}
+      />
+    </div>
+  );
+};
+
+export const WithLoadingCallbacks: Story = {
+  render: AvatarWithLoadingState,
+  args: {
+    member: userData,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates the loading callbacks. Watch the loading indicator above the avatar and check the console/Actions panel for callback logs. The callbacks track when avatar loading starts and when all background images finish loading.',
+      },
+    },
+  },
+};
+
+export const LoadingCallbacksWithGifBackground: Story = {
+  render: AvatarWithLoadingState,
+  args: {
+    member: withGifBackground,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Loading callbacks with a mounted avatar - this will have more images to load, so you can see the loading duration difference.',
+      },
+    },
   },
 };

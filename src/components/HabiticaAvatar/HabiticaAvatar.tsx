@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 
 import HabiticaSprite from '../HabiticaSprite/HabiticaSprite';
 import ClassBadge from '../ClassBadge/ClassBadge';
@@ -36,6 +36,8 @@ export interface HabiticaAvatarProps {
   imagesMeta?: ImagesMeta;
   avatarItemsDetails?: AvatarItemsDetails;
   base64Url?: string;
+  onLoadingStart?: () => void;
+  onLoadingEnd?: () => void;
 }
 
 const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
@@ -56,47 +58,134 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   currentEventList = [],
   onClick,
   base64Url,
+  onLoadingStart,
+  onLoadingEnd,
   ...props
 }) => {
   const [avatarSpritesDetails, setAvatarSpritesDetails] = useState<AvatarSprites | null>(null);
+  const [loadingImages, setLoadingImages] = useState({ total: 0, loaded: 0 });
+  const [loadingAvatar, setLoadingAvatar] = useState<boolean>(false);
+  const [staticData, setStaticData] = useState<{
+    imagesMeta: ImagesMeta | null;
+    avatarItemsDetails: AvatarItemsDetails | null;
+  }>({ imagesMeta: null, avatarItemsDetails: null });
+
+  // static data effect - fetches imagesMeta and avatarItemsDetails once
+  useEffect(() => {
+    const fetchStaticData = async () => {
+      const imagesMeta = props.imagesMeta || await getHabiticaImagesMeta();
+      const avatarItemsDetails = props.avatarItemsDetails || await getHabiticaAvatarItemsDetail();
+      setStaticData({ imagesMeta, avatarItemsDetails });
+    };
+
+    fetchStaticData();
+  }, [props.imagesMeta, props.avatarItemsDetails]); // Only re-run if props change
+
+  // Function to handle individual image load events
+  const handleImageLoad = useCallback(() => {
+    setLoadingImages(prev => ({ ...prev, loaded: prev.loaded + 1 }));
+  }, []);
+
+  // Function to count and track images
+  const setupImageTracking = useCallback((sprites: AvatarSprites) => {
+    const imageUrls = Object.values(sprites)
+      .filter(sprite => isDefined(sprite) && isDefined(sprite.backgroundUrl))
+      .map(sprite => sprite.backgroundUrl)
+      .filter(url => isDefined(url) && url !== '');
+
+    const totalImages = imageUrls.length;
+    setLoadingImages({ total: totalImages, loaded: 0 });
+
+    // Handle case where there are no images to load
+    if (totalImages === 0) {
+      setLoadingAvatar(false);
+      onLoadingEnd?.();
+      return;
+    }
+
+    // Preload images and track their loading
+    imageUrls.forEach(url => {
+      const img = new Image();
+      img.onload = handleImageLoad;
+      img.onerror = handleImageLoad;
+      img.src = url;
+    });
+  }, []);
+
+  // usememo petprank
+  const petPrank = useMemo(() => getAprilFoolsPrank(currentEventList), [currentEventList]);
 
   useEffect(() => {
     // Preload all necessary sprite details
     const loadSpriteDetails = async () => {
-      const imagesMeta = props.imagesMeta || await getHabiticaImagesMeta();
-      const avatarItemsDetails = props.avatarItemsDetails || await getHabiticaAvatarItemsDetail();
-      const petPrank = getAprilFoolsPrank(currentEventList);
-      const avatarSprites = getAvatarSprites(member, overrideAvatarGear, avatarItemsDetails, imagesMeta, petPrank);
+      if (!staticData.imagesMeta || !staticData.avatarItemsDetails) return;
+
+      setLoadingAvatar(true);
+      onLoadingStart?.();
+
+      const avatarSprites = getAvatarSprites(
+        member, 
+        overrideAvatarGear, 
+        staticData.avatarItemsDetails, 
+        staticData.imagesMeta, 
+        petPrank
+      );
 
       if (isDefined(base64Url)) {
         const enrichedSprites = await enrichAvatarSpritesWithBase64(avatarSprites, base64Url);
         setAvatarSpritesDetails(enrichedSprites);
+        setupImageTracking(enrichedSprites);
       } else {
         setAvatarSpritesDetails(avatarSprites);
+        setupImageTracking(avatarSprites);
       }
     };
+
     loadSpriteDetails();
-  }, [member]);
+  }, [
+    member, 
+    base64Url, 
+    JSON.stringify(overrideAvatarGear), 
+    staticData.imagesMeta, 
+    staticData.avatarItemsDetails
+  ]);
 
-  const showAvatar = !(showVisualBuffs && isDefined(avatarSpritesDetails?.buff?.backgroundUrl));
-  const showBackground = !avatarOnly || withBackground;
+  // Handle image loading completion
+  useEffect(() => {
+    if (loadingImages.total > 0 &&
+      loadingImages.loaded === loadingImages.total &&
+      loadingAvatar) {
+      setLoadingAvatar(false);
+      onLoadingEnd?.();
+    }
+  }, [loadingImages, loadingAvatar]);
 
-  const hideGear = (gearType: string) => {
+  const showAvatar = useMemo(() => !(showVisualBuffs && isDefined(avatarSpritesDetails?.buff?.backgroundUrl)), [showVisualBuffs, avatarSpritesDetails]);
+  const showBackground = useMemo(() => !avatarOnly || withBackground, [avatarOnly, withBackground]);
+
+  // TODO: move to getAvatarSprites
+  const hideGear = useCallback((gearType: string) => {
     if (!showWeapon) return true;
     if (gearType === 'weapon') {
       const costumeClass = member.preferences.costume ? 'costume' : 'equipped';
       const equippedWeapon = member.items.gear[costumeClass][gearType];
       if (!equippedWeapon) return false;
       const equippedIsTwoHanded = flatGear[equippedWeapon]?.twoHanded; // get twoHanded from avatar items details
-      const hasOverrideShield = overrideAvatarGear && overrideAvatarGear.shield;
+      const hasOverrideShield = overrideAvatarGear.shield;
       return equippedIsTwoHanded && hasOverrideShield;
     } else if (gearType === 'shield') {
-      const overrideWeapon = overrideAvatarGear && overrideAvatarGear.weapon;
+      const overrideWeapon = overrideAvatarGear.weapon;
       const overrideIsTwoHanded = overrideWeapon && flatGear[overrideWeapon]?.twoHanded;
       return overrideIsTwoHanded;
     }
     return false;
-  };
+  }, [
+    showWeapon,
+    member.items.gear,
+    flatGear,
+    overrideAvatarGear.shield,
+    overrideAvatarGear.weapon
+  ]);
 
   const paddingTop = useMemo(() => {
     if (overrideTopPadding) return overrideTopPadding;
