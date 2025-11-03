@@ -16,6 +16,11 @@ import { AvatarItemsDetails, getHabiticaAvatarItemsDetail, getHabiticaImagesMeta
 import { AvatarSprites, getAvatarSprites } from '../../lib/sprites';
 import { enrichAvatarSpritesWithBase64 } from '../../lib/base64Images';
 
+type LoadingImagesState = {
+  total: number;
+  loaded: number;
+};
+
 export interface HabiticaAvatarProps {
   debugMode?: boolean;
   member: HabiticaMember;
@@ -63,7 +68,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   ...props
 }) => {
   const [avatarSpritesDetails, setAvatarSpritesDetails] = useState<AvatarSprites | null>(null);
-  const [loadingImages, setLoadingImages] = useState({ total: 0, loaded: 0 });
+  const [loadingImages, setLoadingImages] = useState<LoadingImagesState>({ total: 0, loaded: 0 });
   const [loadingAvatar, setLoadingAvatar] = useState<boolean>(false);
   const [staticData, setStaticData] = useState<{
     imagesMeta: ImagesMeta | null;
@@ -87,7 +92,9 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   }, []);
 
   // Function to count and track images
-  const setupImageTracking = useCallback((sprites: AvatarSprites) => {
+  const setupImageTracking = useCallback((sprites: AvatarSprites, loadingImages: LoadingImagesState) => {
+    if (loadingImages.total > loadingImages.loaded) return; // already set up
+
     const imageUrls = Object.values(sprites)
       .filter(sprite => isDefined(sprite) && isDefined(sprite.backgroundUrl))
       .map(sprite => sprite.backgroundUrl)
@@ -134,10 +141,10 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
       if (isDefined(base64Url)) {
         const enrichedSprites = await enrichAvatarSpritesWithBase64(avatarSprites, base64Url);
         setAvatarSpritesDetails(enrichedSprites);
-        setupImageTracking(enrichedSprites);
+        setupImageTracking(enrichedSprites, loadingImages);
       } else {
         setAvatarSpritesDetails(avatarSprites);
-        setupImageTracking(avatarSprites);
+        setupImageTracking(avatarSprites, loadingImages);
       }
     };
 
