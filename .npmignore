@@ -1,0 +1,42 @@
+# Source files (not needed in npm package)
+src/
+.github/
+.storybook/
+
+# Development files
+*.stories.tsx
+*.stories.ts
+*.test.tsx
+*.test.ts
+vitest.config.ts
+vitest.shims.d.ts
+eslint.config.js
+tsconfig.json
+
+# Build tools
+sass/
+
+# Storybook
+storybook-static/
+
+# Development dependencies
+node_modules/
+
+# Logs
+*.log
+
+# Environment files
+.env*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Coverage
+coverage/
+
+# Note: dist/ is NOT ignored - we want it in the npm package!
