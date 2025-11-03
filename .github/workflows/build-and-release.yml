@@ -70,15 +70,14 @@ jobs:
         # Create new branch from main
         git checkout -b $BRANCH_NAME
         
-        # Remove all source files and dev files, keep only essentials + dist
-        rm -rf src/ .github/ .storybook/ node_modules/ issues/ ISSUE_TEMPLATE/
-        rm -f *.config.* tsconfig.json vitest.* eslint.* index.ts
+        # Remove all files except dist and essential files
+        git rm -rf .
+
+        # Add back the dist directory and essential files from main
+        git checkout main -- package.json README.md LICENSE .npmignore
         
         # Force add dist directory (ignore .gitignore for this)
         git add dist/ -f
-        
-        # Add other essential files
-        git add package.json README.md LICENSE .npmignore
         
         # Commit the built files
         git commit -m "Release v${{ steps.package-version.outputs.version }}
@@ -105,12 +104,13 @@ jobs:
         
         echo "✅ Successfully pushed to branch: $BRANCH_NAME"
     
-    - name: Create GitHub Release
+    - name: Create GitHub Release from release branch
       uses: softprops/action-gh-release@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       with:
         tag_name: v${{ steps.package-version.outputs.version }}
+        target_commitish: v${{ steps.package-version.outputs.version }}
         name: Release v${{ steps.package-version.outputs.version }}
         body: |
           ## Release v${{ steps.package-version.outputs.version }}
