@@ -7,7 +7,6 @@ export interface OverrideAvatarGear {
     mustache?: number;
     beard?: number;
     flower?: number;
-    [key: string]: string | number | undefined;
   };
   skin?: string;
   shirt?: string;
