@@ -12,7 +12,7 @@ import { FlatGear } from '../../types/FlatGear';
 import { CurrentEventList } from '../../types/CurrentEventList';
 
 import './HabiticaAvatar.css';
-import { AvatarItemsDetails, getHabiticaAvatarItemsDetail, getHabiticaImagesMeta, ImagesMeta } from 'habitica-avatar-manifest';
+import { AvatarManifestItems, getHabiticaAvatarManifestItems, getHabiticaImagesMeta, ImagesMeta } from 'habitica-avatar-manifest';
 import { AvatarSprites, getAvatarSprites } from '../../lib/sprites';
 import { enrichAvatarSpritesWithBase64 } from '../../lib/base64Images';
 
@@ -39,7 +39,7 @@ export interface HabiticaAvatarProps {
   currentEventList?: CurrentEventList;
   onClick?: (member: HabiticaMember) => void;
   imagesMeta?: ImagesMeta;
-  avatarItemsDetails?: AvatarItemsDetails;
+  avatarManifestItems?: AvatarManifestItems;
   base64Url?: string;
   onLoadingStart?: () => void;
   onLoadingEnd?: () => void;
@@ -72,19 +72,26 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   const [loadingAvatar, setLoadingAvatar] = useState<boolean>(false);
   const [staticData, setStaticData] = useState<{
     imagesMeta: ImagesMeta | null;
-    avatarItemsDetails: AvatarItemsDetails | null;
-  }>({ imagesMeta: null, avatarItemsDetails: null });
+    avatarManifestItems: AvatarManifestItems | null;
+  }>({ imagesMeta: null, avatarManifestItems: null });
 
-  // static data effect - fetches imagesMeta and avatarItemsDetails once
+  // static data effect - fetches imagesMeta and avatarManifestItems once
   useEffect(() => {
     const fetchStaticData = async () => {
-      const imagesMeta = props.imagesMeta || await getHabiticaImagesMeta();
-      const avatarItemsDetails = props.avatarItemsDetails || await getHabiticaAvatarItemsDetail();
-      setStaticData({ imagesMeta, avatarItemsDetails });
+      if (props.imagesMeta && props.avatarManifestItems) {
+        const { imagesMeta, avatarManifestItems } = props;
+        setStaticData({ imagesMeta, avatarManifestItems }); 
+      } else {
+        const [imagesMeta, avatarManifestItems] = await Promise.all([
+          getHabiticaImagesMeta(),
+          getHabiticaAvatarManifestItems()
+        ]);
+        setStaticData({ imagesMeta, avatarManifestItems });
+      }
     };
 
     fetchStaticData();
-  }, [props.imagesMeta, props.avatarItemsDetails]); // Only re-run if props change
+  }, [props.imagesMeta, props.avatarManifestItems]); // Only re-run if props change
 
   // Function to handle individual image load events
   const handleImageLoad = useCallback(() => {
@@ -125,16 +132,16 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   useEffect(() => {
     // Preload all necessary sprite details
     const loadSpriteDetails = async () => {
-      if (!staticData.imagesMeta || !staticData.avatarItemsDetails) return;
+      if (!staticData.imagesMeta || !staticData.avatarManifestItems) return;
 
       setLoadingAvatar(true);
       onLoadingStart?.();
 
       const avatarSprites = getAvatarSprites(
-        member, 
-        overrideAvatarGear, 
-        staticData.avatarItemsDetails, 
-        staticData.imagesMeta, 
+        member,
+        overrideAvatarGear,
+        staticData.avatarManifestItems,
+        staticData.imagesMeta,
         petPrank
       );
 
@@ -150,11 +157,11 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
 
     loadSpriteDetails();
   }, [
-    member, 
-    base64Url, 
-    JSON.stringify(overrideAvatarGear), 
-    staticData.imagesMeta, 
-    staticData.avatarItemsDetails
+    member,
+    base64Url,
+    JSON.stringify(overrideAvatarGear),
+    staticData.imagesMeta,
+    staticData.avatarManifestItems
   ]);
 
   // Handle image loading completion

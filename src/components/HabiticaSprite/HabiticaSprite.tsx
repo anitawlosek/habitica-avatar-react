@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect } from 'react';
+import React, { CSSProperties, useMemo } from 'react';
 import { AvatarSprite } from '../../lib/sprites';
 import { createClassName, isDefined } from '../../lib/helpers';
 import '../HabiticaAvatar/HabiticaAvatar.css';
@@ -30,7 +30,7 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
 }) => {
   const Wrapper = wrapper;
 
-  const inlineStyles = React.useMemo<CSSProperties | undefined>(() => ({
+  const inlineStyles = useMemo<CSSProperties | undefined>(() => ({
     width: spriteDetails ? `${spriteDetails.width}px` : undefined,
     height: spriteDetails ? `${spriteDetails.height}px` : undefined,
     backgroundImage: spriteDetails ? `url(${spriteDetails.backgroundUrl})` : undefined,

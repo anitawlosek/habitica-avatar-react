@@ -14,13 +14,13 @@ A React component library for rendering Habitica game avatars with customizable 
 This package is **not published on npm**. Install it directly from GitHub:
 
 ```bash
-npm install anitawlosek/habitica-avatar-react#v0.0.3-alpha
+npm install anitawlosek/habitica-avatar-react#v0.0.6-alpha
 ```
 
 or with yarn:
 
 ```bash
-yarn add anitawlosek/habitica-avatar-react#v0.0.3-alpha
+yarn add anitawlosek/habitica-avatar-react#v0.0.6-alpha
 ```
 
 ## Usage
@@ -28,6 +28,8 @@ yarn add anitawlosek/habitica-avatar-react#v0.0.3-alpha
 ```tsx
 import { HabiticaAvatar } from 'habitica-avatar-react';
 import type { HabiticaMember } from 'habitica-avatar-react';
+// For performance optimization, also import:
+// import type { ImagesMeta, AvatarManifestItems } from 'habitica-avatar-manifest';
 
 const member: HabiticaMember = {
   // ...see /src/mocks/user.json for example structure
@@ -39,6 +41,73 @@ export default function Example() {
   );
 }
 ```
+
+### Loading Callbacks
+
+You can track avatar loading state using the loading callback props:
+
+```tsx
+import { HabiticaAvatar } from 'habitica-avatar-react';
+import { useState } from 'react';
+
+export default function LoadingExample() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  return (
+    <div>
+      {isLoading && <div>Loading avatar...</div>}
+      <HabiticaAvatar 
+        member={member}
+        onLoadingStart={() => setIsLoading(true)}
+        onLoadingEnd={() => setIsLoading(false)}
+      />
+    </div>
+  );
+}
+```
+
+### Performance Optimization
+
+For better performance when rendering multiple avatars, you can pre-fetch the manifest data once and pass it to all avatar components:
+
+```tsx
+import { HabiticaAvatar } from 'habitica-avatar-react';
+import { getHabiticaImagesMeta, getHabiticaAvatarManifestItems } from 'habitica-avatar-manifest';
+import { useEffect, useState } from 'react';
+
+export default function MultipleAvatars({ members }) {
+  const [manifestData, setManifestData] = useState(null);
+
+  useEffect(() => {
+    const loadManifestData = async () => {
+      const [imagesMeta, avatarManifestItems] = await Promise.all([
+        getHabiticaImagesMeta(),
+        getHabiticaAvatarManifestItems()
+      ]);
+      setManifestData({ imagesMeta, avatarManifestItems });
+    };
+
+    loadManifestData();
+  }, []);
+
+  if (!manifestData) return <div>Loading...</div>;
+
+  return (
+    <div>
+      {members.map(member => (
+        <HabiticaAvatar 
+          key={member.id}
+          member={member}
+          imagesMeta={manifestData.imagesMeta}
+          avatarManifestItems={manifestData.avatarManifestItems}
+        />
+      ))}
+    </div>
+  );
+}
+```
+
+This approach prevents each avatar from individually fetching the same manifest data, significantly improving performance when rendering multiple avatars.
 
 ### Props
 
@@ -59,6 +128,10 @@ export default function Example() {
 | `showWeapon`        | `boolean`                              | `true`          | Show weapon/shield sprites.                                                  |
 | `flatGear`          | `FlatGear`                             | `{}`            | Flat gear data for two-handed weapon logic.                                  |
 | `currentEventList`  | `CurrentEventList`                     | `[]`            | List of current events (for April Fools, etc).                               |
+| `imagesMeta`        | `ImagesMeta`                           | —               | Pre-fetched images metadata for performance optimization.                     |
+| `avatarManifestItems` | `AvatarManifestItems`                | —               | Pre-fetched avatar manifest items for performance optimization.               |
+| `onLoadingStart`    | `() => void`                           | —               | Callback fired when avatar loading starts.                                   |
+| `onLoadingEnd`      | `() => void`                           | —               | Callback fired when avatar loading ends (all images loaded).                 |
 | `onClick`           | `(member: HabiticaMember) => void`     | —               | Click handler for the avatar.                                                |
 
 ### Example Data

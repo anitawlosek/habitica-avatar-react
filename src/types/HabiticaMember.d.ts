@@ -25,7 +25,7 @@ export interface HabiticaMember {
     currentPet: string;
   };
   stats: {
-    class: ClassType;
+    class: MemberClass;
     buffs: {
       snowball: boolean;
       spookySparkles: boolean;
@@ -36,4 +36,4 @@ export interface HabiticaMember {
   };
 }
 
-export type ClassType = 'warrior' | 'rogue' | 'healer' | 'wizard';
+export type MemberClass = 'warrior' | 'rogue' | 'healer' | 'wizard';

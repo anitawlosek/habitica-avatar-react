@@ -1,4 +1,4 @@
-import { AvatarItemsDetails, ImagesMeta, ItemMeta } from "habitica-avatar-manifest";
+import { AvatarManifestItems, ImagesMeta, ItemMeta } from "habitica-avatar-manifest";
 import { getNestedProperty, isDefined } from "./helpers";
 import { HabiticaMember } from "../types/HabiticaMember";
 import { OverrideAvatarGear } from "../types/OverrideAvatarGear";
@@ -85,14 +85,20 @@ export type AvatarSprites = Record<AvatarSpriteType, AvatarSprite>;
 export const getAvatarSprites = (
   userSettings: HabiticaMember,
   overrideAvatarGear: OverrideAvatarGear,
-  avatarItemsDetails: AvatarItemsDetails,
+  avatarManifestItems: AvatarManifestItems,
   imagesMeta: ImagesMeta,
   petPrank: string | null = null
 ): AvatarSprites => {
   const avatarSprites: AvatarSprites = {} as any;
 
   avatarSpriteTypes.forEach(spriteType => {
-    const spriteFileName = getAvatarSettingImageUrl(userSettings, overrideAvatarGear, spriteType, avatarItemsDetails, petPrank);
+    const spriteFileName = getAvatarSettingImageUrl(
+      userSettings, 
+      overrideAvatarGear, 
+      spriteType, 
+      avatarManifestItems, 
+      petPrank
+    );
 
     if (!isDefined(spriteFileName)) return;
 
@@ -156,7 +162,7 @@ const getAvatarSettingImageUrl = (
   userSettings: HabiticaMember,
   overrideAvatarGear: OverrideAvatarGear,
   spriteType: AvatarSpriteType,
-  avatarItemsDetails: AvatarItemsDetails,
+  avatarManifestItems: AvatarManifestItems,
   petPrank: string | null = null
 ): string | null => {
   switch (spriteType) {
@@ -170,7 +176,7 @@ const getAvatarSettingImageUrl = (
     case 'gear.shield':
     case 'gear.weapon':
       const gearItemId = getItemId(userSettings, overrideAvatarGear, spriteType);
-      const gearItemDetail = getNestedProperty<ItemMeta>(avatarItemsDetails, `${spriteType}.${gearItemId}`);
+      const gearItemDetail = getNestedProperty<ItemMeta>(avatarManifestItems, `${spriteType}.${gearItemId}`);
 
       if (!gearItemDetail) return null;
 
@@ -189,7 +195,7 @@ const getAvatarSettingImageUrl = (
     case 'hair.flower':
       const hairItemId = getItemId(userSettings, overrideAvatarGear, spriteType);
       const hairColorId = getItemId(userSettings, overrideAvatarGear, 'hair.color');
-      const hairItemDetail = getNestedProperty(avatarItemsDetails, `${spriteType}.${hairItemId}`) as ItemMeta | undefined;
+      const hairItemDetail = getNestedProperty(avatarManifestItems, `${spriteType}.${hairItemId}`) as ItemMeta | undefined;
 
       if (!hairItemDetail) return null;
 
@@ -204,7 +210,7 @@ const getAvatarSettingImageUrl = (
     case 'mount.body':
       const mountPart = spriteType === 'mount.head' ? 'Head' : 'Body';
       const mountId = userSettings.items.currentMount;
-      const mountDetail = mountId ? avatarItemsDetails.mount[mountId] : undefined;
+      const mountDetail = mountId ? avatarManifestItems.mount[mountId] : undefined;
 
       if (!mountDetail) return null;
 
@@ -214,7 +220,7 @@ const getAvatarSettingImageUrl = (
     case 'pet':
       const currentPetId = userSettings.items.currentPet;
       const petId = petPrank ? foolPet(currentPetId, petPrank) : currentPetId;
-      const petDetail = petId ? avatarItemsDetails.pet[petId] : undefined;
+      const petDetail = petId ? avatarManifestItems.pet[petId] : undefined;
 
       if (!petDetail) return null;
 
@@ -222,7 +228,7 @@ const getAvatarSettingImageUrl = (
     case 'buff':
       const buffId = getItemId(userSettings, overrideAvatarGear, spriteType);
       if (!buffId) return null;
-      const buffDetail = avatarItemsDetails.buff[buffId] ?? avatarItemsDetails.buff[`${buffId}_${userSettings.stats.class}`];
+      const buffDetail = avatarManifestItems.buff[buffId] ?? avatarManifestItems.buff[`${buffId}_${userSettings.stats.class}`];
 
       return buffDetail?.imageFileNames.find(fileName => !fileName.startsWith('icon_')) || null;
     case 'background':
@@ -231,13 +237,13 @@ const getAvatarSettingImageUrl = (
 
       if (!itemId) return null;
 
-      return avatarItemsDetails[spriteType][itemId]?.imageFileNames.find(fileName => !fileName.startsWith('icon_')) || null;
+      return avatarManifestItems[spriteType][itemId]?.imageFileNames.find(fileName => !fileName.startsWith('icon_')) || null;
     case 'skin':
       const skinId = getItemId(userSettings, overrideAvatarGear, spriteType)
 
       if (!skinId) return null;
 
-      return avatarItemsDetails[spriteType][skinId].imageFileNames.find(fileName => {
+      return avatarManifestItems[spriteType][skinId].imageFileNames.find(fileName => {
         if (userSettings.preferences.sleep) {
           return !fileName.startsWith('icon_') && fileName.includes('sleep');
         }
@@ -249,11 +255,11 @@ const getAvatarSettingImageUrl = (
       const sizeId = userSettings.preferences.size;
       if (!shirtId) return null;
 
-      return avatarItemsDetails.body[spriteType][shirtId].imageFileNames.find(fileName => !fileName.startsWith('icon_') && fileName.includes(sizeId)) || null;
+      return avatarManifestItems.body[spriteType][shirtId].imageFileNames.find(fileName => !fileName.startsWith('icon_') && fileName.includes(sizeId)) || null;
     case 'sleep':
       const isSleeping = userSettings.preferences[spriteType];
 
-      return avatarItemsDetails.sleep[`${isSleeping}`]?.imageFileNames[0] || null;
+      return avatarManifestItems.sleep[`${isSleeping}`]?.imageFileNames[0] || null;
     default:
       return spriteType;
   }
