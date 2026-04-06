@@ -11,7 +11,8 @@ import { OverrideAvatarGear } from '../../types/OverrideAvatarGear';
 import { FlatGear } from '../../types/FlatGear';
 import { CurrentEventList } from '../../types/CurrentEventList';
 
-import './HabiticaAvatar.css';
+import styles from './HabiticaAvatar.module.scss';
+import classBadgeStyles from '../ClassBadge/ClassBadge.module.scss';
 import { AvatarManifestItems, getHabiticaAvatarManifestItems, getHabiticaImagesMeta, ImagesMeta } from 'habitica-avatar-manifest';
 import { AvatarSprites, getAvatarSprites } from '../../lib/sprites';
 import { enrichAvatarSpritesWithBase64 } from '../../lib/base64Images';
@@ -217,14 +218,14 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
 
   const topLevelClassList = useMemo(() => {
     const classes = [];
-    if (debugMode) classes.push('debug');
-    if (centerAvatar) classes.push('centered-avatar');
+    if (debugMode) classes.push(styles.debug);
+    if (centerAvatar) classes.push(styles['centered-avatar']);
     return createClassName(...classes);
   }, [debugMode, centerAvatar]);
 
   const specialMountClass = useMemo(() => {
     if (!avatarOnly && member.items.currentMount && member.items.currentMount.includes('Kangaroo')) {
-      return 'offset-kangaroo';
+      return styles['offset-kangaroo'];
     }
     return '';
   }, [avatarOnly, member]);
@@ -252,9 +253,9 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
 
   return (
     <HabiticaSprite
-      className={createClassName("avatar", topLevelClassList)}
+      className={createClassName(styles.avatar, topLevelClassList)}
       spriteDetails={showBackground ? avatarSpritesDetails.background : null}
-      style={{ width: `${widthNumber}px`, height: derivedHeight, paddingTop }}
+      style={{ width: `${widthNumber}px`, height: derivedHeight }}
       onClick={handleClick}
       wrapper="div"
     >
@@ -263,10 +264,11 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
         height: `${BASE_HEIGHT}px`,
         transform: `scale(${scaleFactor})`,
         transformOrigin: 'top left',
+        paddingTop,
         position: 'relative',
         boxSizing: 'border-box',
       }}>
-        <div className="character-sprites" style={{ margin: spritesMargin }}>
+        <div className={styles['character-sprites']} style={{ margin: spritesMargin }}>
           {!avatarOnly && member.items.currentMount && (
             <HabiticaSprite spriteDetails={avatarSpritesDetails['mount.body']} />
           )}
@@ -299,7 +301,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
                 <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.shield']} className={specialMountClass} />
               )}
               {!hideGear('weapon') && (
-                <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.weapon']} className={createClassName(specialMountClass, 'weapon')} />
+                <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.weapon']} className={createClassName(specialMountClass, styles.weapon)} />
               )}
             </>
           )}
@@ -310,12 +312,12 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
               {member.items.currentMount && (
                 <HabiticaSprite spriteDetails={avatarSpritesDetails[`mount.head`]} />
               )}
-              <HabiticaSprite spriteDetails={avatarSpritesDetails.pet} className='current-pet' />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails.pet} className={styles['current-pet']} />
             </>
           )}
         </div>
         {isDefined(member.stats.class) && showClassBadge && (
-          <ClassBadge className="under-avatar" memberClass={member.stats.class} />
+          <ClassBadge className={classBadgeStyles['under-avatar']} memberClass={member.stats.class} />
         )}
       </div>
     </HabiticaSprite>

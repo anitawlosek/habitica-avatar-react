@@ -1,7 +1,6 @@
 import React, { CSSProperties, useMemo } from 'react';
 import { AvatarSprite } from '../../lib/sprites';
 import { createClassName, isDefined } from '../../lib/helpers';
-import '../HabiticaAvatar/HabiticaAvatar.css';
 
 export interface HabiticaSpriteProps {
   /**

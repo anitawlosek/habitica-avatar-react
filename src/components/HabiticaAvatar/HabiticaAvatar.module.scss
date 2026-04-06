@@ -2,7 +2,7 @@
   image-rendering: pixelated;
   position: relative;
   cursor: pointer;
-  margin-bottom: -0.5rem !important; // resetting the additional padding
+  margin-bottom: -0.5rem !important;
   box-sizing: border-box;
 
   &.centered-avatar {
@@ -14,10 +14,10 @@
   width: 90px;
   height: 90px;
   display: inline-flex;
-}
 
-.character-sprites span {
-  position: absolute;
+  span {
+    position: absolute;
+  }
 }
 
 .current-pet {
@@ -49,21 +49,21 @@
   }
 }
 
-[class*="skin_"],
-[class*="hair_"],
-[class*="shirt_"],
-[class*="Mount_"],
-[class*="Pet-"] {
+:global([class*="skin_"]),
+:global([class*="hair_"]),
+:global([class*="shirt_"]),
+:global([class*="Mount_"]),
+:global([class*="Pet-"]) {
   background-size: contain;
   background-repeat: no-repeat;
 }
 
-[class*="Mount_Head_"],
-[class*="Mount_Body_"] {
+:global([class*="Mount_Head_"]),
+:global([class*="Mount_Body_"]) {
   margin-top: 18px;
 }
 
-[class*="background_"] {
+:global([class*="background_"]) {
   background-size: cover;
   background-repeat: no-repeat;
 }

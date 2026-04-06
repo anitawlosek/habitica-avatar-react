@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MemberClass } from '../../types/HabiticaMember';
-import './ClassBadge.css';
+import styles from './ClassBadge.module.scss';
 
 const ICON_URLS: Record<MemberClass, string> = {
   warrior: 'https://raw.githubusercontent.com/HabitRPG/habitica/e096d7ac42bb6bf5def2f8fdf71cd0afea10d755/website/client/src/assets/svg/warrior.svg',
@@ -39,14 +39,11 @@ const ClassBadge: React.FC<ClassBadgeProps> = ({ memberClass, badgeSize = 32, cl
 
   return (
     <div
-      className={`class-badge d-flex justify-content-center${className ? ' ' + className : ''}`}
-      style={{
-        // CSS variable for badge size
-        ...( { ['--badge-size']: badgeSize + 'px' } as React.CSSProperties ),
-      }}
+      className={`${styles['class-badge']}${className ? ' ' + className : ''}`}
+      style={{ ['--badge-size']: badgeSize + 'px' } as React.CSSProperties}
     >
       <div
-        className="align-self-center svg-icon"
+        className={styles['svg-icon']}
         aria-label={memberClass}
         dangerouslySetInnerHTML={{ __html: svg }}
       />
