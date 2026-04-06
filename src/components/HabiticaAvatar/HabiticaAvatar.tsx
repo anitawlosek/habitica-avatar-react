@@ -28,7 +28,7 @@ export interface HabiticaAvatarProps {
   avatarOnly?: boolean;
   withBackground?: boolean;
   overrideAvatarGear?: OverrideAvatarGear;
-  width?: string;
+  width?: string | number;
   centerAvatar?: boolean;
   spritesMargin?: string;
   overrideTopPadding?: string | null;
@@ -237,14 +237,24 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   if (!member.preferences) return null;
   if (!isDefined(avatarSpritesDetails)) return null;
 
-  const scaleFactor = parseFloat(width) / BASE_WIDTH;
+  // Make sure it's number, string number or px
+  const widthNumber = (() => {
+    if (typeof width === 'number') return width;
+    const trimmed = width.trim();
+    // Accept plain numbers ("282") or px values ("282px") only
+    if (/^\d+(\.\d+)?(px)?$/.test(trimmed)) return parseFloat(trimmed);
+    console.warn(`HabiticaAvatar: unsupported width unit "${width}". Use a pixel value (e.g. 282 or "282px"). Falling back to default ${BASE_WIDTH}px.`);
+    return BASE_WIDTH;
+  })();
+
+  const scaleFactor = widthNumber / BASE_WIDTH;
   const derivedHeight = `${Math.round(BASE_HEIGHT * scaleFactor)}px`;
 
   return (
     <HabiticaSprite
       className={createClassName("avatar", topLevelClassList)}
       spriteDetails={showBackground ? avatarSpritesDetails.background : null}
-      style={{ width, height: derivedHeight }}
+      style={{ width: `${widthNumber}px`, height: derivedHeight }}
       onClick={handleClick}
       wrapper="div"
     >

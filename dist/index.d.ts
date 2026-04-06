@@ -90,7 +90,7 @@ interface HabiticaAvatarProps {
     avatarOnly?: boolean;
     withBackground?: boolean;
     overrideAvatarGear?: OverrideAvatarGear;
-    width?: string;
+    width?: string | number;
     centerAvatar?: boolean;
     spritesMargin?: string;
     overrideTopPadding?: string | null;

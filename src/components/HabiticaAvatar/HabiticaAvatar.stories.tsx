@@ -67,9 +67,9 @@ const meta: Meta<typeof HabiticaAvatar> = {
     },
     width: {
       control: 'text',
-      description: 'Width of the avatar container. Height is derived automatically from the aspect ratio.',
+      description: 'Width of the avatar container. Accepts a CSS string ("282px") or a plain number (282). Height is derived automatically from the aspect ratio.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'string | number' },
         defaultValue: { summary: "'141px'" },
       },
     },

@@ -550,14 +550,21 @@ var HabiticaAvatar = ({
   };
   if (!member.preferences) return null;
   if (!isDefined(avatarSpritesDetails)) return null;
-  const scaleFactor = parseFloat(width) / BASE_WIDTH;
+  const widthNumber = (() => {
+    if (typeof width === "number") return width;
+    const trimmed = width.trim();
+    if (/^\d+(\.\d+)?(px)?$/.test(trimmed)) return parseFloat(trimmed);
+    console.warn(`HabiticaAvatar: unsupported width unit "${width}". Use a pixel value (e.g. 282 or "282px"). Falling back to default ${BASE_WIDTH}px.`);
+    return BASE_WIDTH;
+  })();
+  const scaleFactor = widthNumber / BASE_WIDTH;
   const derivedHeight = `${Math.round(BASE_HEIGHT * scaleFactor)}px`;
   return /* @__PURE__ */ jsx3(
     HabiticaSprite_default,
     {
       className: createClassName("avatar", topLevelClassList),
       spriteDetails: showBackground ? avatarSpritesDetails.background : null,
-      style: { width, height: derivedHeight },
+      style: { width: `${widthNumber}px`, height: derivedHeight },
       onClick: handleClick,
       wrapper: "div",
       children: /* @__PURE__ */ jsxs("div", { style: {

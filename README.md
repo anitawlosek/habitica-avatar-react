@@ -119,7 +119,7 @@ This approach prevents each avatar from individually fetching the same manifest 
 | `avatarOnly`        | `boolean`                              | `false`         | Show only the avatar (no pet/mount/background).                              |
 | `withBackground`    | `boolean`                              | `false`         | Show background even if `avatarOnly` is true.                                |
 | `overrideAvatarGear`| `OverrideAvatarGear`                   | `{}`            | Override gear, hair, skin, etc. for the avatar.                              |
-| `width`             | `string`                               | `'141px'`       | Width of the avatar container. Height is derived automatically from the aspect ratio. |
+| `width`             | `string \| number`                     | `'141px'`       | Width of the avatar in **pixels** — e.g. `282` or `"282px"`. Height is derived automatically. Must be a pixel value; other CSS units (e.g. `em`, `rem`, `%`, `in`) will produce incorrect scaling. |
 | `centerAvatar`      | `boolean`                              | `false`         | Center the avatar in its container.                                          |
 | `spritesMargin`     | `string`                               | `'0 auto 0 24px'`| Margin for the sprites container.                                            |
 | `overrideTopPadding`| `string \| null`                       | `null`          | Override the top padding of the avatar.                                      |
