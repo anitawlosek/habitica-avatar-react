@@ -136,6 +136,11 @@ This approach prevents each avatar from individually fetching the same manifest 
 ### Example Data
 Example user objects can be found in [`src/mocks/`](src/mocks/).
 
+## Storybook
+
+Live component documentation is available at:
+**https://anitawlosek.github.io/habitica-avatar-react/**
+
 ## Development
 
 - Run Storybook for local development:
