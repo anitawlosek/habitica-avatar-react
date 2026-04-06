@@ -28,8 +28,7 @@ export interface HabiticaAvatarProps {
   avatarOnly?: boolean;
   withBackground?: boolean;
   overrideAvatarGear?: OverrideAvatarGear;
-  width?: string;
-  height?: string;
+  width?: string | number;
   centerAvatar?: boolean;
   spritesMargin?: string;
   overrideTopPadding?: string | null;
@@ -45,6 +44,9 @@ export interface HabiticaAvatarProps {
   onLoadingEnd?: () => void;
 }
 
+const BASE_WIDTH = 141;
+const BASE_HEIGHT = 147;
+
 const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   member,
   debugMode = false,
@@ -53,7 +55,6 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   withBackground = false,
   overrideAvatarGear = {},
   width = '141px',
-  height = '147px',
   centerAvatar = false,
   spritesMargin = '0 auto 0 24px',
   overrideTopPadding = null,
@@ -236,65 +237,87 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
   if (!member.preferences) return null;
   if (!isDefined(avatarSpritesDetails)) return null;
 
+  // Make sure it's number, string number or px
+  const widthNumber = (() => {
+    if (typeof width === 'number') return width;
+    const trimmed = width.trim();
+    // Accept plain numbers ("282") or px values ("282px") only
+    if (/^\d+(\.\d+)?(px)?$/.test(trimmed)) return parseFloat(trimmed);
+    console.warn(`HabiticaAvatar: unsupported width unit "${width}". Use a pixel value (e.g. 282 or "282px"). Falling back to default ${BASE_WIDTH}px.`);
+    return BASE_WIDTH;
+  })();
+
+  const scaleFactor = widthNumber / BASE_WIDTH;
+  const derivedHeight = `${Math.round(BASE_HEIGHT * scaleFactor)}px`;
+
   return (
     <HabiticaSprite
       className={createClassName("avatar", topLevelClassList)}
       spriteDetails={showBackground ? avatarSpritesDetails.background : null}
-      style={{ width, height, paddingTop }}
+      style={{ width: `${widthNumber}px`, height: derivedHeight, paddingTop }}
       onClick={handleClick}
       wrapper="div"
     >
-      <div className="character-sprites" style={{ margin: spritesMargin }}>
-        {!avatarOnly && member.items.currentMount && (
-          <HabiticaSprite spriteDetails={avatarSpritesDetails['mount.body']} />
-        )}
-        {/* Buffs that cause visual changes to avatar: Snowman, Ghost, Flower, etc */}
-        {avatarSpritesDetails.buff && showVisualBuffs ? (
-          <HabiticaSprite spriteDetails={avatarSpritesDetails.buff} />
-        ) : null
-        }
-        {/* Show flower ALL THE TIME!! */}
-        <HabiticaSprite spriteDetails={avatarSpritesDetails['hair.flower']} />
-        {/* Show avatar only if not currently affected by visual buff */}
-        {showAvatar && (
-          <>
-            <HabiticaSprite spriteDetails={avatarSpritesDetails.chair} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.back']} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails.skin} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails.shirt} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails.head_0} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.armor']} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.back_collar']} className={specialMountClass} />
-            {(['bangs', 'base', 'mustache', 'beard'] as Array<'bangs' | 'base' | 'mustache' | 'beard'>).map(type => (
-              <HabiticaSprite key={type} spriteDetails={avatarSpritesDetails[`hair.${type}`]} className={specialMountClass} />
-            ))}
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.body']} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.eyewear']} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.head']} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.headAccessory']} className={specialMountClass} />
-            <HabiticaSprite spriteDetails={avatarSpritesDetails['hair.flower']} className={specialMountClass} />
-            {!hideGear('shield') && (
-              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.shield']} className={specialMountClass} />
-            )}
-            {!hideGear('weapon') && (
-              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.weapon']} className={createClassName(specialMountClass, 'weapon')} />
-            )}
-          </>
-        )}
-        {/* Resting */}
-        {member.preferences.sleep && <HabiticaSprite spriteDetails={avatarSpritesDetails['sleep']} />}
-        {!avatarOnly && (
-          <>
-            {member.items.currentMount && (
-              <HabiticaSprite spriteDetails={avatarSpritesDetails[`mount.head`]} />
-            )}
-            <HabiticaSprite spriteDetails={avatarSpritesDetails.pet} className='current-pet' />
-          </>
+      <div style={{
+        width: `${BASE_WIDTH}px`,
+        height: `${BASE_HEIGHT}px`,
+        transform: `scale(${scaleFactor})`,
+        transformOrigin: 'top left',
+        position: 'relative',
+        boxSizing: 'border-box',
+      }}>
+        <div className="character-sprites" style={{ margin: spritesMargin }}>
+          {!avatarOnly && member.items.currentMount && (
+            <HabiticaSprite spriteDetails={avatarSpritesDetails['mount.body']} />
+          )}
+          {/* Buffs that cause visual changes to avatar: Snowman, Ghost, Flower, etc */}
+          {avatarSpritesDetails.buff && showVisualBuffs ? (
+            <HabiticaSprite spriteDetails={avatarSpritesDetails.buff} />
+          ) : null
+          }
+          {/* Show flower ALL THE TIME!! */}
+          <HabiticaSprite spriteDetails={avatarSpritesDetails['hair.flower']} />
+          {/* Show avatar only if not currently affected by visual buff */}
+          {showAvatar && (
+            <>
+              <HabiticaSprite spriteDetails={avatarSpritesDetails.chair} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.back']} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails.skin} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails.shirt} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails.head_0} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.armor']} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.back_collar']} className={specialMountClass} />
+              {(['bangs', 'base', 'mustache', 'beard'] as Array<'bangs' | 'base' | 'mustache' | 'beard'>).map(type => (
+                <HabiticaSprite key={type} spriteDetails={avatarSpritesDetails[`hair.${type}`]} className={specialMountClass} />
+              ))}
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.body']} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.eyewear']} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.head']} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.headAccessory']} className={specialMountClass} />
+              <HabiticaSprite spriteDetails={avatarSpritesDetails['hair.flower']} className={specialMountClass} />
+              {!hideGear('shield') && (
+                <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.shield']} className={specialMountClass} />
+              )}
+              {!hideGear('weapon') && (
+                <HabiticaSprite spriteDetails={avatarSpritesDetails['gear.weapon']} className={createClassName(specialMountClass, 'weapon')} />
+              )}
+            </>
+          )}
+          {/* Resting */}
+          {member.preferences.sleep && <HabiticaSprite spriteDetails={avatarSpritesDetails['sleep']} />}
+          {!avatarOnly && (
+            <>
+              {member.items.currentMount && (
+                <HabiticaSprite spriteDetails={avatarSpritesDetails[`mount.head`]} />
+              )}
+              <HabiticaSprite spriteDetails={avatarSpritesDetails.pet} className='current-pet' />
+            </>
+          )}
+        </div>
+        {isDefined(member.stats.class) && showClassBadge && (
+          <ClassBadge className="under-avatar" memberClass={member.stats.class} />
         )}
       </div>
-      {isDefined(member.stats.class) && showClassBadge && (
-        <ClassBadge className="under-avatar" memberClass={member.stats.class} />
-      )}
     </HabiticaSprite>
   );
 };

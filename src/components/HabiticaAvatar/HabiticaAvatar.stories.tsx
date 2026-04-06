@@ -67,18 +67,10 @@ const meta: Meta<typeof HabiticaAvatar> = {
     },
     width: {
       control: 'text',
-      description: 'Width of the avatar container.',
+      description: 'Width of the avatar container. Accepts a CSS string ("282px") or a plain number (282). Height is derived automatically from the aspect ratio.',
       table: {
-        type: { summary: 'string' },
+        type: { summary: 'string | number' },
         defaultValue: { summary: "'141px'" },
-      },
-    },
-    height: {
-      control: 'text',
-      description: 'Height of the avatar container.',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: "'147px'" },
       },
     },
     centerAvatar: {
@@ -313,6 +305,13 @@ export const WithLoadingCallbacks: Story = {
         story: 'This story demonstrates the loading callbacks. Watch the loading indicator above the avatar and check the console/Actions panel for callback logs. The callbacks track when avatar loading starts and when all background images finish loading.',
       },
     },
+  },
+};
+
+export const CustomWidth: Story = {
+  args: {
+    member: userData,
+    width: '282px',
   },
 };
 
