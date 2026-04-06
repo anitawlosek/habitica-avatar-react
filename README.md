@@ -14,13 +14,13 @@ A React component library for rendering Habitica game avatars with customizable 
 This package is **not published on npm**. Install it directly from GitHub:
 
 ```bash
-npm install anitawlosek/habitica-avatar-react#v0.0.6-alpha
+npm install anitawlosek/habitica-avatar-react#v0.0.7-alpha
 ```
 
 or with yarn:
 
 ```bash
-yarn add anitawlosek/habitica-avatar-react#v0.0.6-alpha
+yarn add anitawlosek/habitica-avatar-react#v0.0.7-alpha
 ```
 
 ## Usage
@@ -119,8 +119,7 @@ This approach prevents each avatar from individually fetching the same manifest 
 | `avatarOnly`        | `boolean`                              | `false`         | Show only the avatar (no pet/mount/background).                              |
 | `withBackground`    | `boolean`                              | `false`         | Show background even if `avatarOnly` is true.                                |
 | `overrideAvatarGear`| `OverrideAvatarGear`                   | `{}`            | Override gear, hair, skin, etc. for the avatar.                              |
-| `width`             | `string`                               | `'141px'`       | Width of the avatar container.                                               |
-| `height`            | `string`                               | `'147px'`       | Height of the avatar container.                                              |
+| `width`             | `string`                               | `'141px'`       | Width of the avatar container. Height is derived automatically from the aspect ratio. |
 | `centerAvatar`      | `boolean`                              | `false`         | Center the avatar in its container.                                          |
 | `spritesMargin`     | `string`                               | `'0 auto 0 24px'`| Margin for the sprites container.                                            |
 | `overrideTopPadding`| `string \| null`                       | `null`          | Override the top padding of the avatar.                                      |
