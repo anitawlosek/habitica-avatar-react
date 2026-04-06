@@ -37,7 +37,7 @@
 .HabiticaAvatar_module_character-sprites {
   width: 90px;
   height: 90px;
-  display: inline-flex;
+  display: flex;
 }
 .HabiticaAvatar_module_current-pet {
   bottom: 0px;
