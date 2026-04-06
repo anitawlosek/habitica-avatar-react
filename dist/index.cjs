@@ -70,11 +70,12 @@ var HabiticaSprite = ({
 }) => {
   const Wrapper = wrapper;
   const inlineStyles = (0, import_react.useMemo)(() => ({
+    position: wrapper === "span" ? "absolute" : void 0,
     width: spriteDetails ? `${spriteDetails.width}px` : void 0,
     height: spriteDetails ? `${spriteDetails.height}px` : void 0,
     backgroundImage: spriteDetails ? `url(${spriteDetails.backgroundUrl})` : void 0,
     ...style
-  }), [spriteDetails, style]);
+  }), [spriteDetails, style, wrapper]);
   if (wrapper === "span" && !isDefined(spriteDetails)) {
     return null;
   }
@@ -86,7 +87,11 @@ var HabiticaSprite_default = HabiticaSprite;
 var import_react2 = require("react");
 
 // src/components/ClassBadge/ClassBadge.module.scss
-var ClassBadge_module_default = {};
+var ClassBadge_module_default = {
+  "class-badge": "ClassBadge_module_class-badge",
+  "under-avatar": "ClassBadge_module_under-avatar",
+  "svg-icon": "ClassBadge_module_svg-icon"
+};
 
 // src/components/ClassBadge/ClassBadge.tsx
 var import_jsx_runtime2 = require("react/jsx-runtime");
@@ -196,7 +201,16 @@ var getAprilFoolsPrank = (currentEventList) => {
 };
 
 // src/components/HabiticaAvatar/HabiticaAvatar.module.scss
-var HabiticaAvatar_module_default = {};
+var HabiticaAvatar_module_default = {
+  avatar: "HabiticaAvatar_module_avatar",
+  "centered-avatar": "HabiticaAvatar_module_centered-avatar",
+  "character-sprites": "HabiticaAvatar_module_character-sprites",
+  "current-pet": "HabiticaAvatar_module_current-pet",
+  "offset-kangaroo": "HabiticaAvatar_module_offset-kangaroo",
+  invert: "HabiticaAvatar_module_invert",
+  debug: "HabiticaAvatar_module_debug",
+  weapon: "HabiticaAvatar_module_weapon"
+};
 
 // src/components/HabiticaAvatar/HabiticaAvatar.tsx
 var import_habitica_avatar_manifest = require("habitica-avatar-manifest");

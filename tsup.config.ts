@@ -7,5 +7,5 @@ export default defineConfig({
   format: ['esm', 'cjs'],
   outDir: 'dist',
   injectStyle: true,
-  esbuildPlugins: [sassPlugin()],
+  esbuildPlugins: [sassPlugin({ type: 'local-css' })],
 });

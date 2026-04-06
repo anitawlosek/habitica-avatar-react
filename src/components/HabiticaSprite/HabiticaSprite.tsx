@@ -30,11 +30,12 @@ const HabiticaSprite: React.FC<HabiticaSpriteProps & { children?: React.ReactNod
   const Wrapper = wrapper;
 
   const inlineStyles = useMemo<CSSProperties | undefined>(() => ({
+    position: wrapper === 'span' ? 'absolute' : undefined,
     width: spriteDetails ? `${spriteDetails.width}px` : undefined,
     height: spriteDetails ? `${spriteDetails.height}px` : undefined,
     backgroundImage: spriteDetails ? `url(${spriteDetails.backgroundUrl})` : undefined,
     ...style
-  }), [spriteDetails, style]);
+  }), [spriteDetails, style, wrapper]);
 
   if (wrapper === 'span' && (!isDefined(spriteDetails))) {
     return null;
