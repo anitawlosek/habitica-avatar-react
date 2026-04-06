@@ -1,6 +1,5 @@
 /* src/components/HabiticaAvatar/HabiticaAvatar.css */
 .avatar {
-  width: 141px;
   image-rendering: pixelated;
   position: relative;
   cursor: pointer;
