@@ -1,6 +1,6 @@
 {
   "name": "habitica-avatar-react",
-  "version": "0.0.7-alpha",
+  "version": "0.1.0-beta",
   "description": "A React component library for rendering Habitica game avatars with customizable appearance, gear, pets, mounts, and visual effects",
   "type": "module",
   "main": "dist/index.js",
