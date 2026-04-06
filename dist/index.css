@@ -1,0 +1,82 @@
+/* src/components/ClassBadge/ClassBadge.module.scss */
+.class-badge {
+  --badge-size: 32px;
+  width: var(--badge-size);
+  height: var(--badge-size);
+  background: #FFFFFF;
+  box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.16), 0 1px 4px 0 rgba(26, 24, 29, 0.12);
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+}
+.under-avatar {
+  position: absolute;
+  left: calc(50% - 16px);
+  bottom: calc(var(--badge-size) / 2 * -1);
+  z-index: 1;
+}
+.svg-icon {
+  display: block;
+  fill: currentColor;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+}
+
+/* src/components/HabiticaAvatar/HabiticaAvatar.module.scss */
+.avatar {
+  image-rendering: pixelated;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: -0.5rem !important;
+  box-sizing: border-box;
+}
+.avatar.centered-avatar {
+  margin: 0 auto;
+}
+.character-sprites {
+  width: 90px;
+  height: 90px;
+  display: inline-flex;
+}
+.character-sprites span {
+  position: absolute;
+}
+.current-pet {
+  bottom: 0px;
+  left: 0px;
+}
+.offset-kangaroo {
+  margin-top: 24px;
+}
+.invert {
+  filter: invert(100%);
+}
+.debug {
+  border: 1px solid red;
+}
+.debug .character-sprites {
+  border: 1px solid blue;
+}
+.debug .weapon {
+  border: 1px solid green;
+}
+.debug span {
+  border: 1px solid yellow;
+}
+:global([class*=skin_]),
+:global([class*=hair_]),
+:global([class*=shirt_]),
+:global([class*=Mount_]),
+:global([class*=Pet-]) {
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+:global([class*=Mount_Head_]),
+:global([class*=Mount_Body_]) {
+  margin-top: 18px;
+}
+:global([class*=background_]) {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
