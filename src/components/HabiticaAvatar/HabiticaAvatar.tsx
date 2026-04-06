@@ -254,7 +254,7 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
     <HabiticaSprite
       className={createClassName("avatar", topLevelClassList)}
       spriteDetails={showBackground ? avatarSpritesDetails.background : null}
-      style={{ width: `${widthNumber}px`, height: derivedHeight }}
+      style={{ width: `${widthNumber}px`, height: derivedHeight, paddingTop }}
       onClick={handleClick}
       wrapper="div"
     >
@@ -263,7 +263,6 @@ const HabiticaAvatar: React.FC<HabiticaAvatarProps> = ({
         height: `${BASE_HEIGHT}px`,
         transform: `scale(${scaleFactor})`,
         transformOrigin: 'top left',
-        paddingTop,
         position: 'relative',
         boxSizing: 'border-box',
       }}>
