@@ -14,13 +14,13 @@ A React component library for rendering Habitica game avatars with customizable 
 This package is **not published on npm**. Install it directly from GitHub:
 
 ```bash
-npm install anitawlosek/habitica-avatar-react#v0.0.7-alpha
+npm install anitawlosek/habitica-avatar-react#v0.0.9-alpha
 ```
 
 or with yarn:
 
 ```bash
-yarn add anitawlosek/habitica-avatar-react#v0.0.7-alpha
+yarn add anitawlosek/habitica-avatar-react#v0.0.9-alpha
 ```
 
 ## Usage
@@ -117,6 +117,7 @@ This approach prevents each avatar from individually fetching the same manifest 
 | `debugMode`         | `boolean`                              | `false`         | Adds debug class for styling/debugging.                                      |
 | `showClassBadge`    | `boolean`                              | `false`         | Show the class badge under the avatar.                                       |
 | `avatarOnly`        | `boolean`                              | `false`         | Show only the avatar (no pet/mount/background).                              |
+| `gearOnly`          | `boolean`                              | `false`         | Show only the gear/equipment (no skin, hair, pet, mount, background, or buffs). |
 | `withBackground`    | `boolean`                              | `false`         | Show background even if `avatarOnly` is true.                                |
 | `overrideAvatarGear`| `OverrideAvatarGear`                   | `{}`            | Override gear, hair, skin, etc. for the avatar.                              |
 | `width`             | `string \| number`                     | `'141px'`       | Width of the avatar in **pixels** — e.g. `282` or `"282px"`. Height is derived automatically. Must be a pixel value; other CSS units (e.g. `em`, `rem`, `%`, `in`) will produce incorrect scaling. |

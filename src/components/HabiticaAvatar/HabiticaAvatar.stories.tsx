@@ -150,6 +150,14 @@ const meta: Meta<typeof HabiticaAvatar> = {
         type: { summary: '() => void' },
       },
     },
+    gearOnly: {
+      control: 'boolean',
+      description: 'Show only gear sprites — hides skin, hair, head, mount, pet, background, and other non-gear elements.',
+      table: {
+        type: { summary: 'boolean' },
+        defaultValue: { summary: 'false' },
+      },
+    },
   },
 };
 
@@ -305,6 +313,13 @@ export const WithLoadingCallbacks: Story = {
         story: 'This story demonstrates the loading callbacks. Watch the loading indicator above the avatar and check the console/Actions panel for callback logs. The callbacks track when avatar loading starts and when all background images finish loading.',
       },
     },
+  },
+};
+
+export const GearOnly: Story = {
+  args: {
+    member: userData,
+    gearOnly: true,
   },
 };
 
