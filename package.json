@@ -11,11 +11,11 @@
   ],
   "scripts": {
     "test": "npm test",
-    "storybook": "storybook dev -p 6006 --host 0.0.0.0",
+    "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "dev": "storybook dev -p 6006 --host 0.0.0.0",
+    "dev": "storybook dev -p 6006",
     "prebuild": "rm -rf dist",
     "build": "tsup"
   },
