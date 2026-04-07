@@ -1,6 +1,6 @@
 {
   "name": "habitica-avatar-react",
-  "version": "0.0.8-alpha",
+  "version": "0.0.9-alpha",
   "description": "A React component library for rendering Habitica game avatars with customizable appearance, gear, pets, mounts, and visual effects",
   "type": "module",
   "main": "dist/index.js",
@@ -11,11 +11,11 @@
   ],
   "scripts": {
     "test": "npm test",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --host 0.0.0.0",
     "build-storybook": "storybook build",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "dev": "storybook dev -p 6006",
+    "dev": "storybook dev -p 6006 --host 0.0.0.0",
     "prebuild": "rm -rf dist",
     "build": "tsup"
   },
