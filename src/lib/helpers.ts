@@ -16,6 +16,7 @@ export const createClassName = (...classes: (string | undefined | false)[]): str
   return definedClasses.join(' ');
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getNestedProperty = <T>(obj: any, path: string): T | undefined => {
   return path.split('.').reduce((acc, part) => acc && acc[part], obj);
 };

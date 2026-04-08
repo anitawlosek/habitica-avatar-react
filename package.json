@@ -13,8 +13,8 @@
     "test": "npm test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "lint": "eslint src --ext .ts,.tsx",
-    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "dev": "storybook dev -p 6006",
     "prebuild": "rm -rf dist",
     "build": "tsup"

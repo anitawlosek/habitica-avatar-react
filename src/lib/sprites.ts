@@ -89,7 +89,7 @@ export const getAvatarSprites = (
   imagesMeta: ImagesMeta,
   petPrank: string | null = null
 ): AvatarSprites => {
-  const avatarSprites: AvatarSprites = {} as any;
+  const avatarSprites: AvatarSprites = {} as AvatarSprites;
 
   avatarSpriteTypes.forEach(spriteType => {
     const spriteFileName = getAvatarSettingImageUrl(
@@ -120,15 +120,15 @@ export const getAvatarSprites = (
 
 const getItemId = (userSettings: HabiticaMember, overrideAvatarGear: OverrideAvatarGear, spriteType: AvatarSpriteType): string | null => {
   switch (spriteType) {
+    // 'gear.back_collar' would go here if re-enabled
     case 'gear.back':
     case 'gear.armor':
-    //case 'gear.back_collar':
     case 'gear.body':
     case 'gear.eyewear':
     case 'gear.head':
     case 'gear.headAccessory':
     case 'gear.shield':
-    case 'gear.weapon':
+    case 'gear.weapon': {
       const gearType = userSettings.preferences.costume ? 'costume' : 'equipped';
       const gearItemType = spriteType.split('.')[1];
 
@@ -137,6 +137,7 @@ const getItemId = (userSettings: HabiticaMember, overrideAvatarGear: OverrideAva
       }
 
       return userSettings.items.gear[gearType][gearItemType];
+    }
     case 'hair.bangs':
     case 'hair.base':
     case 'hair.mustache':
@@ -145,7 +146,7 @@ const getItemId = (userSettings: HabiticaMember, overrideAvatarGear: OverrideAva
     case 'hair.color':
       return getNestedProperty(overrideAvatarGear, spriteType) ?? getNestedProperty(userSettings.preferences, spriteType) ?? null;
     case 'buff':
-      return Object.entries(userSettings.stats.buffs).find(([_, isActive]) => isActive)?.[0] || null;
+      return Object.entries(userSettings.stats.buffs).find(([, isActive]) => isActive)?.[0] || null;
     case 'sleep':
       return `${userSettings.preferences.sleep}`;
     case 'background':
@@ -166,15 +167,15 @@ const getAvatarSettingImageUrl = (
   petPrank: string | null = null
 ): string | null => {
   switch (spriteType) {
+    // 'gear.back_collar' would go here if re-enabled
     case 'gear.back':
     case 'gear.armor':
-    //case 'gear.back_collar':
     case 'gear.body':
     case 'gear.eyewear':
     case 'gear.head':
     case 'gear.headAccessory':
     case 'gear.shield':
-    case 'gear.weapon':
+    case 'gear.weapon': {
       const gearItemId = getItemId(userSettings, overrideAvatarGear, spriteType);
       const gearItemDetail = getNestedProperty<ItemMeta>(avatarManifestItems, `${spriteType}.${gearItemId}`);
 
@@ -188,11 +189,12 @@ const getAvatarSettingImageUrl = (
 
           return !fileName.startsWith('shop_');
         }) || null;
+    }
     case 'hair.bangs':
     case 'hair.base':
     case 'hair.mustache':
     case 'hair.beard':
-    case 'hair.flower':
+    case 'hair.flower': {
       const hairItemId = getItemId(userSettings, overrideAvatarGear, spriteType);
       const hairColorId = getItemId(userSettings, overrideAvatarGear, 'hair.color');
       const hairItemDetail = getNestedProperty(avatarManifestItems, `${spriteType}.${hairItemId}`) as ItemMeta | undefined;
@@ -206,8 +208,9 @@ const getAvatarSettingImageUrl = (
 
         return !fileName.startsWith('icon_') && fileName.includes(hairColorId!);
       }) || null;
+    }
     case 'mount.head':
-    case 'mount.body':
+    case 'mount.body': {
       const mountPart = spriteType === 'mount.head' ? 'Head' : 'Body';
       const mountId = userSettings.items.currentMount;
       const mountDetail = mountId ? avatarManifestItems.mount[mountId] : undefined;
@@ -217,7 +220,8 @@ const getAvatarSettingImageUrl = (
       return mountDetail.imageFileNames.find((fileName: string) => {
         return !fileName.startsWith('stable_') && fileName.includes(mountPart);
       }) || null;
-    case 'pet':
+    }
+    case 'pet': {
       const currentPetId = userSettings.items.currentPet;
       const petId = petPrank ? foolPet(currentPetId, petPrank) : currentPetId;
       const petDetail = petId ? avatarManifestItems.pet[petId] : undefined;
@@ -225,20 +229,23 @@ const getAvatarSettingImageUrl = (
       if (!petDetail) return null;
 
       return petDetail.imageFileNames.find((fileName: string) => !fileName.startsWith('stable_')) || null;
-    case 'buff':
+    }
+    case 'buff': {
       const buffId = getItemId(userSettings, overrideAvatarGear, spriteType);
       if (!buffId) return null;
       const buffDetail = avatarManifestItems.buff[buffId] ?? avatarManifestItems.buff[`${buffId}_${userSettings.stats.class}`];
 
       return buffDetail?.imageFileNames.find(fileName => !fileName.startsWith('icon_')) || null;
+    }
     case 'background':
-    case 'chair':
+    case 'chair': {
       const itemId = getItemId(userSettings, overrideAvatarGear, spriteType);
 
       if (!itemId) return null;
 
       return avatarManifestItems[spriteType][itemId]?.imageFileNames.find(fileName => !fileName.startsWith('icon_')) || null;
-    case 'skin':
+    }
+    case 'skin': {
       const skinId = getItemId(userSettings, overrideAvatarGear, spriteType)
 
       if (!skinId) return null;
@@ -250,16 +257,19 @@ const getAvatarSettingImageUrl = (
 
         return !fileName.startsWith('icon_');
       }) || null;
-    case 'shirt':
+    }
+    case 'shirt': {
       const shirtId = getItemId(userSettings, overrideAvatarGear, spriteType);
       const sizeId = userSettings.preferences.size;
       if (!shirtId) return null;
 
       return avatarManifestItems.body[spriteType][shirtId].imageFileNames.find(fileName => !fileName.startsWith('icon_') && fileName.includes(sizeId)) || null;
-    case 'sleep':
+    }
+    case 'sleep': {
       const isSleeping = userSettings.preferences[spriteType];
 
       return avatarManifestItems.sleep[`${isSleeping}`]?.imageFileNames[0] || null;
+    }
     default:
       return spriteType;
   }

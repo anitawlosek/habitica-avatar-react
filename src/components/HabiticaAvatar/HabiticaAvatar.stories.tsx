@@ -246,7 +246,7 @@ export const EmptyUser: Story = {
 };
 
 // Component to demonstrate loading callbacks
-const AvatarWithLoadingState = (args: any) => {
+const AvatarWithLoadingState = (args: React.ComponentProps<typeof HabiticaAvatar>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadStartTime, setLoadStartTime] = useState<number | null>(null);
   const [loadDuration, setLoadDuration] = useState<number | null>(null);
