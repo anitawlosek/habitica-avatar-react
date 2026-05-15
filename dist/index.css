@@ -1,0 +1,78 @@
+/* src/components/ClassBadge/ClassBadge.module.scss */
+.ClassBadge_module_class-badge {
+  --badge-size: 32px;
+  width: var(--badge-size);
+  height: var(--badge-size);
+  background: #FFFFFF;
+  box-shadow: 0 2px 2px 0 rgba(26, 24, 29, 0.16), 0 1px 4px 0 rgba(26, 24, 29, 0.12);
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+}
+.ClassBadge_module_under-avatar {
+  position: absolute;
+  left: calc(50% - 16px);
+  bottom: calc(var(--badge-size) / 2 * -1);
+  z-index: 1;
+}
+.ClassBadge_module_svg-icon {
+  display: block;
+  fill: currentColor;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+}
+
+/* src/components/HabiticaAvatar/HabiticaAvatar.module.scss */
+.HabiticaAvatar_module_avatar {
+  image-rendering: pixelated;
+  position: relative;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.HabiticaAvatar_module_avatar.HabiticaAvatar_module_centered-avatar {
+  margin: 0 auto;
+}
+.HabiticaAvatar_module_character-sprites {
+  width: 90px;
+  height: 90px;
+  display: flex;
+}
+.HabiticaAvatar_module_current-pet {
+  bottom: 0px;
+  left: 0px;
+}
+.HabiticaAvatar_module_offset-kangaroo {
+  margin-top: 24px;
+}
+.HabiticaAvatar_module_invert {
+  filter: invert(100%);
+}
+.HabiticaAvatar_module_debug {
+  border: 1px solid red;
+}
+.HabiticaAvatar_module_debug .HabiticaAvatar_module_character-sprites {
+  border: 1px solid blue;
+}
+.HabiticaAvatar_module_debug .HabiticaAvatar_module_weapon {
+  border: 1px solid green;
+}
+.HabiticaAvatar_module_debug span {
+  border: 1px solid yellow;
+}
+[class*=skin_],
+[class*=hair_],
+[class*=shirt_],
+[class*=Mount_],
+[class*=Pet-] {
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+[class*=Mount_Head_],
+[class*=Mount_Body_] {
+  margin-top: 18px;
+}
+[class*=background_] {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
