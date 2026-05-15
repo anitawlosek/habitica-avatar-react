@@ -204,7 +204,7 @@ const getAvatarSettingImageUrl = (
           return !fileName.startsWith('icon_')
         }
 
-        return !fileName.startsWith('icon_') && fileName.includes(hairColorId!);
+        return !fileName.startsWith('icon_') && fileName.includes(`_${hairColorId}`);
       }) || null;
     case 'mount.head':
     case 'mount.body':
